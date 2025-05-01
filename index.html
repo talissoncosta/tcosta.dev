@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tálisson Costa | Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .section-divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            margin: 2rem auto;
+            border-radius: 2px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #3b82f6;
+            border: 3px solid white;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        
+        .skill-pill {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-600">tcostadev</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">About</a>
+                    <a href="#skills" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Skills</a>
+                    <a href="#experience" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Experience</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Contact</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-toggle" class="text-gray-500 hover:text-blue-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">About</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Skills</a>
+                <a href="#experience" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Experience</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Hi, I'm <span class="text-blue-600">Tálisson Costa</span></h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-gray-700 mb-6">Software Engineer</h2>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                        I build scalable web applications with modern technologies. Currently working remotely with international teams.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 shadow-md">
+                            Contact Me
+                        </a>
+                        <a href="#experience" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium transition duration-300">
+                            My Work
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <div class="absolute inset-0 bg-blue-100 rounded-full opacity-20"></div>
+                        <div class="absolute inset-4 bg-blue-200 rounded-full opacity-20"></div>
+                        <div class="absolute inset-8 bg-blue-300 rounded-full opacity-20"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-white shadow-xl floating">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Profile" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">About Me</h2>
+            <div class="section-divider"></div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Personal Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-5 w-5 text-blue-600 mt-1">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600"><span class="font-medium text-gray-700">Name:</span> Tálisson Oliveira da Costa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-5 w-5 text-blue-600 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600"><span class="font-medium text-gray-700">Email:</span> tcostase@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-5 w-5 text-blue-600 mt-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600"><span class="font-medium text-gray-700">Phone:</span> +55-49-99811-2053</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-5 w-5 text-blue-600 mt-1">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600"><span class="font-medium text-gray-700">Languages:</span> English, Portuguese</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-700 mt-8 mb-4">Interests</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                            <i class="fas fa-book mr-1"></i> Reading
+                        </span>
+                        <span class="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                            <i class="fas fa-film mr-1"></i> Movies
+                        </span>
+                        <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                            <i class="fas fa-table-tennis mr-1"></i> Tennis
+                        </span>
+                        <span class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">
+                            <i class="fas fa-dumbbell mr-1"></i> Gym
+                        </span>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Connect With Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://linkedin.com/in/talissoncosta" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/talissoncosta" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-gray-900 transition duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:tcostase@gmail.com" class="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition duration-300">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Education</h3>
+                    <div class="space-y-6 relative pl-10 timeline">
+                        <div class="relative timeline-item">
+                            <h4 class="text-lg font-medium text-gray-800">Universidade Federal da Fronteira Sul – UFFS</h4>
+                            <p class="text-blue-600 font-medium">BS in Computer Science</p>
+                            <p class="text-gray-500">2011–2019 · Chapecó-SC, Brazil</p>
+                        </div>
+                        
+                        <div class="relative timeline-item">
+                            <h4 class="text-lg font-medium text-gray-800">National University of Ireland – Galway (NUIG)</h4>
+                            <p class="text-blue-600 font-medium">BS in Computer Science (Exchange)</p>
+                            <p class="text-gray-500">2014 · Galway, Ireland</p>
+                        </div>
+                        
+                        <div class="relative timeline-item">
+                            <h4 class="text-lg font-medium text-gray-800">Atlantic Language Galway</h4>
+                            <p class="text-blue-600 font-medium">English Course</p>
+                            <p class="text-gray-500">2013–2014 · Galway, Ireland</p>
+                        </div>
+                        
+                        <div class="relative timeline-item">
+                            <h4 class="text-lg font-medium text-gray-800">CAPES – Science Without Borders Program</h4>
+                            <p class="text-blue-600 font-medium">Academic and cultural exchange</p>
+                            <p class="text-gray-500">2013–2014 · Galway, Ireland</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">My Skills</h2>
+            <div class="section-divider"></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+                <!-- Frontend Skills -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Frontend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">React</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">Next.js</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">JavaScript</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">TypeScript</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">CSS</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">Webpack</span>
+                    </div>
+                </div>
+                
+                <!-- Backend Skills -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Backend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">Node.js</span>
+                        <span class="skill-pill px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">Express</span>
+                        <span class="skill-pill px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">GraphQL</span>
+                        <span class="skill-pill px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">Apollo</span>
+                        <span class="skill-pill px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">REST APIs</span>
+                    </div>
+                </div>
+                
+                <!-- Database Skills -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Database</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">PostgreSQL</span>
+                        <span class="skill-pill px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">MongoDB</span>
+                        <span class="skill-pill px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">MySQL</span>
+                    </div>
+                </div>
+                
+                <!-- Mobile Skills -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mr-3">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Mobile</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full text-sm font-medium">React Native</span>
+                    </div>
+                </div>
+                
+                <!-- Tools & Others -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 mr-3">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Tools</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-3 py-1 bg-red-50 text-red-700 rounded-full text-sm font-medium">Git</span>
+                        <span class="skill-pill px-3 py-1 bg-red-50 text-red-700 rounded-full text-sm font-medium">Jest</span>
+                        <span class="skill-pill px-3 py-1 bg-red-50 text-red-700 rounded-full text-sm font-medium">Storybook</span>
+                    </div>
+                </div>
+                
+                <!-- Languages -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Languages</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm font-medium">English (Fluent)</span>
+                        <span class="skill-pill px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm font-medium">Portuguese (Native)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Work Experience</h2>
+            <div class="section-divider"></div>
+            
+            <div class="mt-12 space-y-8 relative pl-10 timeline">
+                <!-- Fracto -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Fracto — Software Engineer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Part-time · Remote</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">September 2024 – Present</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Contributing to the web platform using Next.js</li>
+                            <li>Involved in technical planning and architecture discussions</li>
+                            <li>PR reviews and led the introduction of automated tests</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Mydose -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Mydose — Software Engineer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Part-time · Remote</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">September 2023 – Present</span>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Key contributor in the early stages of a React Native app</li>
+                            <li>Helped implement payment features</li>
+                            <li>Collaborated on architectural decisions and code reviews</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Calendly -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Calendly — Software Engineer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Full-time · Remote (Atlanta, GA, USA)</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">August 2022 – Present</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Core contributor to Calendly's design system (Calendly UI)</li>
+                            <li>Focused on developing accessible, reusable UI components</li>
+                            <li>Thorough documentation practices</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Hugo -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Hugo (Acquired by Calendly) — Senior Software Engineer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Full-time · Remote (San Francisco, CA, USA)</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">March 2021 – August 2022</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Worked with React, Node.js, and PostgreSQL</li>
+                            <li>Developed new features and maintained a platform serving thousands of users daily</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Grupo MContigo -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Grupo MContigo — Fullstack Developer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Part-time · Remote (Salamanca, Spain)</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">February 2020 – February 2021</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Used Next.js, React, and Node.js to build scalable products</li>
+                            <li>Platform served up to 100 million monthly visits</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Adireto -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Adireto — Team Leader & Fullstack Developer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Full-time · Remote (Brasília-DF, Brazil)</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">February 2020 – March 2021</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Led a team of 3 focused on test coverage and clean code</li>
+                            <li>Improved code quality and project maintainability</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Amplisoftware -->
+                <div class="relative timeline-item">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Amplisoftware Tecnologia — Team Leader & Fullstack Developer</h3>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium mt-2 sm:mt-0">Full-time · Chapecó-SC, Brazil</span>
+                        </div>
+                        <p class="text-blue-600 font-medium mb-3">November 2015 – February 2020</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Developed real-time chat systems with Node.js and socket.io</li>
+                            <li>Worked extensively with MongoDB and REST APIs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Get In Touch</h2>
+            <div class="section-divider"></div>
+            
+            <div class="mt-12 flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-xl shadow-sm">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Send me a message</h3>
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 shadow-md">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-xl shadow-sm h-full">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">Email</h4>
+                                    <a href="mailto:tcostase@gmail.com" class="text-base text-blue-600 hover:text-blue-800">tcostase@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">Phone</h4>
+                                    <a href="tel:+5549998112053" class="text-base text-blue-600 hover:text-blue-800">+55-49-99811-2053</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">LinkedIn</h4>
+                                    <a href="https://linkedin.com/in/talissoncosta" target="_blank" class="text-base text-blue-600 hover:text-blue-800">linkedin.com/in/talissoncosta</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center text-white">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">GitHub</h4>
+                                    <a href="https://github.com/talissoncosta" target="_blank" class="text-base text-blue-600 hover:text-blue-800">github.com/talissoncosta</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-10">
+                            <h4 class="text-lg font-medium text-gray-800 mb-4">Based in</h4>
+                            <div class="w-full h-64 rounded-lg overflow-hidden">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317715.7119369247!2d-0.38178406930702025!3d51.52873506623988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2s!4v1629997981448!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold">tcostadev</span>
+                    <p class="text-gray-400 mt-1">Building digital experiences that matter</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://linkedin.com/in/talissoncosta" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="https://github.com/talissoncosta" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="mailto:tcostase@gmail.com" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>© 2024 Tálisson Costa. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active-nav');
+                    });
+                    this.classList.add('active-nav');
+                }
+            });
+        });
+
+        // Highlight active navigation link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 100)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active-nav');
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just show an alert
+            alert(`Thank you, ${name}! Your message has been sent. I'll get back to you soon.`);
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>
