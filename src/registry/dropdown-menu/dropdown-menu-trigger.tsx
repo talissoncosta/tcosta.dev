@@ -1,28 +1,30 @@
 'use client';
 
-import type { VariantProps } from 'class-variance-authority';
-import type { ComponentProps } from 'react';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '../button';
+import { Button, type ButtonProps } from '../button';
 import { useDropdownMenuContext } from './dropdown-menu-context';
 
-type DropdownMenuTriggerProps = Omit<ComponentProps<'button'>, 'ref'> &
-  VariantProps<typeof buttonVariants>;
+type DropdownMenuTriggerProps = Omit<ButtonProps, 'ref'>;
 
 export function DropdownMenuTrigger({
   variant = 'outline',
   size,
+  loading,
   className,
   ...props
 }: DropdownMenuTriggerProps) {
   const { isOpen, setReference, getReferenceProps } = useDropdownMenuContext();
 
+  // Button's `size`/`loading` are variants, not DOM attributes, so they skip Floating UI's props.
+
   return (
-    <button
-      type="button"
+    <Button
       ref={setReference}
+      variant={variant}
+      size={size}
+      loading={loading}
       data-state={isOpen ? 'open' : 'closed'}
-      className={cn(buttonVariants({ variant, size }), 'data-[state=open]:bg-accent', className)}
+      className={cn('data-[state=open]:bg-accent', className)}
       {...getReferenceProps(props)}
     />
   );
