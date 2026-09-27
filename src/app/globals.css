@@ -23,3 +23,22 @@
     color: var(--shiki-dark);
   }
 }
+
+/* Page entrance: blocks rise and un-blur in sequence — `motion-safe:animate-enter enter-<n>`.
+   Pure CSS, so it runs straight from the static HTML. */
+@theme {
+  --animate-enter: enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+      filter: blur(4px);
+    }
+  }
+}
+
+/* Stagger step: enter-1 starts 80ms after enter-0, and so on. */
+@utility enter-* {
+  animation-delay: calc(--value(integer) * 80ms);
+}
