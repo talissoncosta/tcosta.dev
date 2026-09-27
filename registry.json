@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "ui-lab",
-  "homepage": "https://example.com",
+  "name": "tcosta",
+  "homepage": "https://tcosta.dev",
   "items": [
     {
       "name": "toast",
@@ -130,8 +130,7 @@
           "target": "components/switch-css/switch-css.tsx"
         }
       ],
-      "registryDependencies": ["utils"],
-      "dependencies": []
+      "registryDependencies": ["utils"]
     },
     {
       "name": "copy-button",

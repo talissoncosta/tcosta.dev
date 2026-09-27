@@ -3,7 +3,6 @@
   "name": "switch-css",
   "title": "Switch (CSS-only)",
   "description": "The same switch with zero JS animation — CSS transitions only.",
-  "dependencies": [],
   "registryDependencies": [
     "utils"
   ],

@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CodeBlock } from '@/components/site/code-block';
+import { InstallCommand } from '@/components/site/install-command';
 import { Preview } from '@/components/site/preview';
 import { TextLink } from '@/components/site/text-link';
 import { catalog, getEntry } from '@/lib/catalog';
 import { pageMetadata } from '@/lib/metadata';
+import { dependenciesOf, installCommand } from '@/lib/registry';
+
+const INLINE_CODE = 'font-mono text-[13px] text-foreground';
 
 export const dynamicParams = false;
 
@@ -25,8 +29,10 @@ export async function generateMetadata(props: PageProps<'/lab/[slug]'>): Promise
 }
 
 export default async function ComponentPage(props: PageProps<'/lab/[slug]'>) {
-  const entry = getEntry((await props.params).slug);
+  const { slug } = await props.params;
+  const entry = getEntry(slug);
   if (!entry) notFound();
+  const dependencies = dependenciesOf(slug);
   const { title, description, techniques, Demo, files } = entry;
 
   return (
@@ -54,14 +60,32 @@ export default async function ComponentPage(props: PageProps<'/lab/[slug]'>) {
       </Preview>
 
       <section className="flex flex-col gap-3">
+        <h2 className="text-sm font-medium">Install</h2>
+        <InstallCommand command={installCommand(slug)} />
+        <p className="text-sm text-pretty text-muted-foreground">
+          Or copy the files below into <code className={INLINE_CODE}>components/{slug}/</code>. They
+          use the shadcn/ui theme tokens and <code className={INLINE_CODE}>cn</code> from{' '}
+          <code className={INLINE_CODE}>@/lib/utils</code>
+          {dependencies.length > 0 && (
+            <>
+              , and need{' '}
+              {dependencies.map((name, index) => (
+                <span key={name}>
+                  {index > 0 && ' + '}
+                  <code className={INLINE_CODE}>{name}</code>
+                </span>
+              ))}
+            </>
+          )}
+          .
+        </p>
+      </section>
+
+      <section className="flex flex-col gap-3">
         <h2 className="text-sm font-medium">Source</h2>
         {files.map((file) => (
           <CodeBlock key={file} file={file} />
         ))}
-        <p className="text-sm text-muted-foreground">
-          Requires <code className="font-mono text-[13px]">motion</code>. Copy the file into your
-          project, or install from the registry once it is published.
-        </p>
       </section>
     </article>
   );
