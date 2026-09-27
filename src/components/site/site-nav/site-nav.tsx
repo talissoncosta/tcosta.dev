@@ -15,7 +15,8 @@ export function SiteNav() {
             <SiteNavLink {...link} />
           </li>
         ))}
-        <li>
+        {/* On phones the header can't fit it; GitHub is also linked from the home page. */}
+        <li className="hidden sm:block">
           <SiteNavLink href="https://github.com/talissoncosta" label="GitHub" external />
         </li>
         <li>
