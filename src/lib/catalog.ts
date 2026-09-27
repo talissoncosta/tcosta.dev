@@ -78,7 +78,11 @@ export const catalog: CatalogEntry[] = [
     techniques: ['AnimatePresence popLayout', 'spring', 'pathLength', 'blur'],
     addedAt: '2026-09-27',
     Demo: CopyButtonDemo,
-    files: ['copy-button/copy-button.tsx'],
+    files: [
+      'copy-button/copy-button.tsx',
+      'copy-button/use-copy-to-clipboard.ts',
+      'copy-button/icons.tsx',
+    ],
   },
   {
     slug: 'animated-tabs',
