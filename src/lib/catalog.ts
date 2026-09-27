@@ -3,6 +3,7 @@ import AnimatedTabsDemo from "@/demos/animated-tabs-demo";
 import CopyButtonDemo from "@/demos/copy-button-demo";
 import SwitchCssDemo from "@/demos/switch-css-demo";
 import SwitchDemo from "@/demos/switch-demo";
+import ToastDemo from "@/demos/toast-demo";
 
 export type CatalogEntry = {
   slug: string;
@@ -24,6 +25,15 @@ export type CatalogEntry = {
  * 3. an entry here + an item in registry.json
  */
 export const catalog: CatalogEntry[] = [
+  {
+    slug: "toast",
+    title: "Toast",
+    description: "Stacked toasts that fan out on hover, swipe to dismiss, pause while you read, and morph from loading to done.",
+    techniques: ["AnimatePresence", "drag", "useAnimate", "useSyncExternalStore", "ResizeObserver", "aria-live"],
+    addedAt: "2026-09-29",
+    Demo: ToastDemo,
+    files: ["toast/toast.tsx"],
+  },
   {
     slug: "switch",
     title: "Switch",

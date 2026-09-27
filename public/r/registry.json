@@ -4,6 +4,21 @@
   "homepage": "https://example.com",
   "items": [
     {
+      "name": "toast",
+      "type": "registry:component",
+      "title": "Toast",
+      "description": "Stacked toasts with hover-to-expand, swipe to dismiss, pausing timers and promise toasts.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/toast/toast.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "switch",
       "type": "registry:component",
       "title": "Switch",
