@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "title": "Button",
+  "description": "Five variants, three sizes, press feedback and a loading state that keeps its width.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/button/index.ts",
+      "content": "export { Button, type ButtonProps } from './button';\nexport { buttonVariants } from './button-variants';\n",
+      "type": "registry:component",
+      "target": "components/button/index.ts"
+    },
+    {
+      "path": "src/registry/button/button.tsx",
+      "content": "import type { VariantProps } from 'class-variance-authority';\nimport type { ComponentProps, MouseEvent } from 'react';\nimport { cn } from '@/lib/utils';\nimport { buttonVariants } from './button-variants';\nimport { Spinner } from './spinner';\n\nexport type ButtonProps = ComponentProps<'button'> &\n  VariantProps<typeof buttonVariants> & {\n    /** Shows a spinner in place of the content, keeping the button's width. Stays focusable. */\n    loading?: boolean;\n  };\n\nexport function Button({\n  variant,\n  size,\n  loading = false,\n  type = 'button',\n  className,\n  onClick,\n  children,\n  ...props\n}: ButtonProps) {\n  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {\n    if (loading) {\n      event.preventDefault();\n      return;\n    }\n    onClick?.(event);\n  };\n\n  return (\n    <button\n      type={type}\n      aria-busy={loading || undefined}\n      onClick={handleClick}\n      className={cn(buttonVariants({ variant, size }), className)}\n      {...props}\n    >\n      {/* The content stays in the layout while loading, so the width never jumps. */}\n      <span\n        className={cn(\n          'inline-flex items-center gap-[inherit] transition-[opacity,filter] duration-150 motion-reduce:transition-none',\n          loading && 'opacity-0 blur-[2px]',\n        )}\n      >\n        {children}\n      </span>\n      <span\n        className={cn(\n          'absolute inset-0 flex items-center justify-center transition-[opacity,scale] duration-150 motion-reduce:transition-none',\n          loading ? 'scale-100 opacity-100' : 'scale-50 opacity-0',\n        )}\n      >\n        <Spinner />\n      </span>\n    </button>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/button/button.tsx"
+    },
+    {
+      "path": "src/registry/button/button-variants.ts",
+      "content": "import { cva } from 'class-variance-authority';\n\nexport const buttonVariants = cva(\n  [\n    'relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md text-sm font-medium whitespace-nowrap outline-none select-none',\n    'transition-[color,background-color,border-color,box-shadow,scale] duration-150 active:scale-[0.97]',\n    'focus-visible:ring-[3px] focus-visible:ring-ring/50',\n    'disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-progress',\n    \"[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n  ],\n  {\n    variants: {\n      variant: {\n        primary: 'bg-primary text-primary-foreground hover:bg-primary/90',\n        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',\n        outline: 'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',\n        ghost: 'hover:bg-accent hover:text-accent-foreground',\n        destructive: 'bg-destructive/10 text-destructive hover:bg-destructive/20',\n      },\n      size: {\n        sm: 'h-8 gap-1.5 px-3 text-xs',\n        md: 'h-9 gap-2 px-4',\n        lg: 'h-10 gap-2 px-5',\n      },\n    },\n    defaultVariants: {\n      variant: 'primary',\n      size: 'md',\n    },\n  },\n);\n",
+      "type": "registry:component",
+      "target": "components/button/button-variants.ts"
+    },
+    {
+      "path": "src/registry/button/spinner.tsx",
+      "content": "export function Spinner() {\n  return (\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" className=\"size-4 animate-spin\" aria-hidden>\n      <circle cx=\"12\" cy=\"12\" r=\"9\" stroke=\"currentColor\" strokeOpacity=\"0.25\" strokeWidth=\"3\" />\n      <path d=\"M21 12a9 9 0 0 0-9-9\" stroke=\"currentColor\" strokeWidth=\"3\" strokeLinecap=\"round\" />\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/button/spinner.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

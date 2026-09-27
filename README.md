@@ -19,6 +19,8 @@ theme. You can also copy the source straight from the component's page.
 
 | Component       | What it does                                                                       |
 | --------------- | ---------------------------------------------------------------------------------- |
+| `button`        | Five variants, three sizes, press feedback, loading that keeps its width           |
+| `icon-button`   | Single-icon button whose accessible label is required by the type                  |
 | `dropdown-menu` | Menu that grows out of its trigger, item cascade, typeahead, full keyboard support |
 | `theme-toggle`  | Light/dark switch revealed in a circle from the click (View Transitions)           |
 | `toast`         | Stacked toasts: fan out on hover, swipe to dismiss, pausing timers, promise toasts |

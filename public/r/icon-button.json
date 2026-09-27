@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "icon-button",
+  "title": "Icon Button",
+  "description": "Square button for a single icon; its accessible label is required by the type. Builds on Button.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "utils",
+    "https://tcosta.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/icon-button/index.ts",
+      "content": "export { IconButton } from './icon-button';\nexport { iconButtonVariants } from './icon-button-variants';\n",
+      "type": "registry:component",
+      "target": "components/icon-button/index.ts"
+    },
+    {
+      "path": "src/registry/icon-button/icon-button.tsx",
+      "content": "import type { ReactElement } from 'react';\nimport { cn } from '@/lib/utils';\nimport { Button, type ButtonProps } from '../button';\nimport { iconButtonVariants } from './icon-button-variants';\n\ntype IconButtonProps = Omit<ButtonProps, 'children' | 'aria-label'> & {\n  /** Accessible name. Required: an icon alone says nothing to a screen reader. */\n  label: string;\n  children: ReactElement;\n};\n\nexport function IconButton({ label, size, className, ...props }: IconButtonProps) {\n  return (\n    <Button\n      aria-label={label}\n      size={size}\n      className={cn(iconButtonVariants({ size }), className)}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/icon-button/icon-button.tsx"
+    },
+    {
+      "path": "src/registry/icon-button/icon-button-variants.ts",
+      "content": "import { cva } from 'class-variance-authority';\n\nexport const iconButtonVariants = cva('px-0', {\n  variants: {\n    size: {\n      sm: 'size-8',\n      md: 'size-9',\n      lg: 'size-10',\n    },\n  },\n  defaultVariants: {\n    size: 'md',\n  },\n});\n",
+      "type": "registry:component",
+      "target": "components/icon-button/icon-button-variants.ts"
+    }
+  ],
+  "type": "registry:component"
+}

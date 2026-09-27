@@ -4,6 +4,61 @@
   "homepage": "https://tcosta.dev",
   "items": [
     {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "Five variants, three sizes, press feedback and a loading state that keeps its width.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "src/registry/button/index.ts",
+          "type": "registry:component",
+          "target": "components/button/index.ts"
+        },
+        {
+          "path": "src/registry/button/button.tsx",
+          "type": "registry:component",
+          "target": "components/button/button.tsx"
+        },
+        {
+          "path": "src/registry/button/button-variants.ts",
+          "type": "registry:component",
+          "target": "components/button/button-variants.ts"
+        },
+        {
+          "path": "src/registry/button/spinner.tsx",
+          "type": "registry:component",
+          "target": "components/button/spinner.tsx"
+        }
+      ]
+    },
+    {
+      "name": "icon-button",
+      "type": "registry:component",
+      "title": "Icon Button",
+      "description": "Square button for a single icon; its accessible label is required by the type. Builds on Button.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils", "https://tcosta.dev/r/button.json"],
+      "files": [
+        {
+          "path": "src/registry/icon-button/index.ts",
+          "type": "registry:component",
+          "target": "components/icon-button/index.ts"
+        },
+        {
+          "path": "src/registry/icon-button/icon-button.tsx",
+          "type": "registry:component",
+          "target": "components/icon-button/icon-button.tsx"
+        },
+        {
+          "path": "src/registry/icon-button/icon-button-variants.ts",
+          "type": "registry:component",
+          "target": "components/icon-button/icon-button-variants.ts"
+        }
+      ]
+    },
+    {
       "name": "dropdown-menu",
       "type": "registry:component",
       "title": "Dropdown Menu",
