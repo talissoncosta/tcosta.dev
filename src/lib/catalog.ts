@@ -1,6 +1,8 @@
 import type { ComponentType } from "react";
 import AnimatedTabsDemo from "@/demos/animated-tabs-demo";
 import CopyButtonDemo from "@/demos/copy-button-demo";
+import SwitchCssDemo from "@/demos/switch-css-demo";
+import SwitchDemo from "@/demos/switch-demo";
 
 export type CatalogEntry = {
   slug: string;
@@ -22,6 +24,24 @@ export type CatalogEntry = {
  * 3. an entry here + an item in registry.json
  */
 export const catalog: CatalogEntry[] = [
+  {
+    slug: "switch",
+    title: "Switch",
+    description: "Springy, draggable thumb that stretches while pressed. Async (optimistic or pessimistic) with shake-on-error, icons, custom color and native form support.",
+    techniques: ["layout", "drag", "whileTap variants", "keyframes", "AnimatePresence popLayout", "a11y: switch role", "forms"],
+    addedAt: "2026-09-28",
+    Demo: SwitchDemo,
+    files: ["switch/switch.tsx"],
+  },
+  {
+    slug: "switch-css",
+    title: "Switch (CSS-only)",
+    description: "The same switch with zero JS animation. Mash it next to the Motion version to feel spring vs bezier.",
+    techniques: ["CSS transitions", "overshoot bezier", "group-active", "spring vs bezier"],
+    addedAt: "2026-09-28",
+    Demo: SwitchCssDemo,
+    files: ["switch-css/switch-css.tsx"],
+  },
   {
     slug: "copy-button",
     title: "Copy Button",
