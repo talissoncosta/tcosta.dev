@@ -12,12 +12,12 @@ export function generateStaticParams() {
   return catalog.map(({ slug }) => ({ slug }));
 }
 
-export async function generateMetadata(props: PageProps<"/c/[slug]">): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/lab/[slug]">): Promise<Metadata> {
   const entry = getEntry((await props.params).slug);
   return entry ? { title: entry.title, description: entry.description } : {};
 }
 
-export default async function ComponentPage(props: PageProps<"/c/[slug]">) {
+export default async function ComponentPage(props: PageProps<"/lab/[slug]">) {
   const { slug } = await props.params;
   const entry = getEntry(slug);
   if (!entry) notFound();
@@ -26,7 +26,7 @@ export default async function ComponentPage(props: PageProps<"/c/[slug]">) {
   return (
     <article className="flex flex-col gap-8 pt-6">
       <div>
-        <Link href="/" className="text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100">
+        <Link href="/lab" className="text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100">
           ← All components
         </Link>
         <h1 className="mt-4 text-2xl font-semibold tracking-tight">{title}</h1>
