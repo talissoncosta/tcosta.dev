@@ -19,7 +19,7 @@
     },
     {
       "path": "src/registry/icon-button/icon-button.tsx",
-      "content": "import type { ReactElement } from 'react';\nimport { cn } from '@/lib/utils';\nimport { Button, type ButtonProps } from '../button';\nimport { iconButtonVariants } from './icon-button-variants';\n\ntype IconButtonProps = Omit<ButtonProps, 'children' | 'aria-label'> & {\n  /** Accessible name. Required: an icon alone says nothing to a screen reader. */\n  label: string;\n  children: ReactElement;\n};\n\nexport function IconButton({ label, size, className, ...props }: IconButtonProps) {\n  return (\n    <Button\n      aria-label={label}\n      size={size}\n      className={cn(iconButtonVariants({ size }), className)}\n      {...props}\n    />\n  );\n}\n",
+      "content": "import type { ReactElement } from 'react';\nimport { cn } from '@/lib/utils';\nimport { Button, type ButtonProps } from '../button';\nimport { iconButtonVariants } from './icon-button-variants';\n\ntype IconButtonProps = Omit<ButtonProps, 'children' | 'aria-label'> & {\n  /** Accessible name. Required: an icon alone says nothing to a screen reader. */\n  label: string;\n  children: ReactElement;\n};\n\nexport function IconButton({ label, size, className, ...props }: IconButtonProps) {\n  return (\n    <Button\n      data-slot=\"icon-button\"\n      aria-label={label}\n      size={size}\n      className={cn(iconButtonVariants({ size }), className)}\n      {...props}\n    />\n  );\n}\n",
       "type": "registry:component",
       "target": "components/icon-button/icon-button.tsx"
     },

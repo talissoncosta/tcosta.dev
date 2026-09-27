@@ -29,6 +29,7 @@ export function CopyButton({
 
   return (
     <IconButton
+      data-slot="copy-button"
       label={copied ? 'Copied' : 'Copy to clipboard'}
       variant="ghost"
       size="sm"

@@ -82,6 +82,7 @@ export function Switch({
     <span className="relative inline-flex">
       <motion.button
         type="button"
+        data-slot="switch"
         role="switch"
         aria-checked={checked}
         aria-busy={busy || undefined}

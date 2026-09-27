@@ -17,6 +17,7 @@ export function TabsContent({ value, className, children }: TabsContentProps) {
 
   return (
     <motion.div
+      data-slot="tabs-content"
       role="tabpanel"
       id={contentId(tabs.id, value)}
       aria-labelledby={triggerId(tabs.id, value)}

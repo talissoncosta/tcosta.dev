@@ -18,6 +18,7 @@ export function TabsTrigger({ value, className, children }: TabsTriggerProps) {
   return (
     <button
       type="button"
+      data-slot="tabs-trigger"
       role="tab"
       id={triggerId(tabs.id, value)}
       data-value={value}

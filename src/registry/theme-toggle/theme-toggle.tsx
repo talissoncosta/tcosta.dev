@@ -25,6 +25,7 @@ export function ThemeToggle({ className, onClick, ...props }: ThemeToggleProps) 
 
   return (
     <IconButton
+      data-slot="theme-toggle"
       label="Toggle theme"
       variant="ghost"
       size="sm"

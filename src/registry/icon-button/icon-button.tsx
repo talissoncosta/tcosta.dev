@@ -12,6 +12,7 @@ type IconButtonProps = Omit<ButtonProps, 'children' | 'aria-label'> & {
 export function IconButton({ label, size, className, ...props }: IconButtonProps) {
   return (
     <Button
+      data-slot="icon-button"
       aria-label={label}
       size={size}
       className={cn(iconButtonVariants({ size }), className)}

@@ -17,6 +17,7 @@ export function TabsList({ label, className, children }: TabsListProps) {
 
   return (
     <div
+      data-slot="tabs-list"
       role="tablist"
       aria-label={label}
       onKeyDown={onKeyDown}

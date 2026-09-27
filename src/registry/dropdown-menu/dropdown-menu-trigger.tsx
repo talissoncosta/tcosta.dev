@@ -19,6 +19,7 @@ export function DropdownMenuTrigger({
 
   return (
     <Button
+      data-slot="dropdown-menu-trigger"
       ref={setReference}
       variant={variant}
       size={size}

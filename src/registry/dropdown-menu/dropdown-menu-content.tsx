@@ -39,6 +39,7 @@ export function DropdownMenuContent({ className, children }: DropdownMenuContent
       {isOpen && (
         <FloatingFocusManager context={floatingContext} modal={false}>
           <div
+            data-slot="dropdown-menu-content"
             ref={setFloating}
             style={floatingStyles}
             className="z-50 outline-none"
