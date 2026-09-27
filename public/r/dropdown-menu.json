@@ -1,0 +1,71 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu",
+  "title": "Dropdown Menu",
+  "description": "Compound dropdown menu that grows out of its trigger (also after flipping), with a quick item cascade, typeahead and the WAI-ARIA menu keyboard pattern.",
+  "dependencies": [
+    "motion",
+    "@floating-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/dropdown-menu/index.ts",
+      "content": "export { DropdownMenu } from './dropdown-menu';\nexport { DropdownMenuContent } from './dropdown-menu-content';\nexport { DropdownMenuItem } from './dropdown-menu-item';\nexport {\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n} from './dropdown-menu-parts';\nexport { DropdownMenuTrigger } from './dropdown-menu-trigger';\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/index.ts"
+    },
+    {
+      "path": "src/registry/dropdown-menu/dropdown-menu.tsx",
+      "content": "'use client';\n\nimport type { Placement } from '@floating-ui/react';\nimport type { ReactNode } from 'react';\nimport { DropdownMenuContext } from './dropdown-menu-context';\nimport { useDropdownMenu } from './use-dropdown-menu';\n\ntype DropdownMenuProps = {\n  placement?: Placement;\n  children: ReactNode;\n};\n\nexport function DropdownMenu({ placement = 'bottom-start', children }: DropdownMenuProps) {\n  const menu = useDropdownMenu(placement);\n  return <DropdownMenuContext value={menu}>{children}</DropdownMenuContext>;\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/dropdown-menu.tsx"
+    },
+    {
+      "path": "src/registry/dropdown-menu/dropdown-menu-trigger.tsx",
+      "content": "'use client';\n\nimport type { ComponentProps } from 'react';\nimport { cn } from '@/lib/utils';\nimport { useDropdownMenuContext } from './dropdown-menu-context';\n\ntype DropdownMenuTriggerProps = Omit<ComponentProps<'button'>, 'ref'>;\n\nexport function DropdownMenuTrigger({ className, ...props }: DropdownMenuTriggerProps) {\n  const { isOpen, setReference, getReferenceProps } = useDropdownMenuContext();\n\n  return (\n    <button\n      type=\"button\"\n      ref={setReference}\n      data-state={isOpen ? 'open' : 'closed'}\n      className={cn(\n        'inline-flex h-9 items-center gap-2 rounded-md border bg-background px-3 text-sm font-medium shadow-xs transition-colors outline-none',\n        'hover:bg-accent data-[state=open]:bg-accent',\n        'focus-visible:ring-[3px] focus-visible:ring-ring/50',\n        className,\n      )}\n      {...getReferenceProps(props)}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/dropdown-menu-trigger.tsx"
+    },
+    {
+      "path": "src/registry/dropdown-menu/dropdown-menu-content.tsx",
+      "content": "'use client';\n\nimport { FloatingFocusManager, FloatingList } from '@floating-ui/react';\nimport { AnimatePresence, motion, type Variants } from 'motion/react';\nimport type { ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\nimport { useDropdownMenuContext } from './dropdown-menu-context';\nimport { transformOrigin } from './transform-origin';\n\n// Opens a touch slower than it closes; items follow in a short cascade.\nconst menuVariants: Variants = {\n  closed: { opacity: 0, scale: 0.96, transition: { duration: 0.1, ease: 'easeIn' } },\n  open: {\n    opacity: 1,\n    scale: 1,\n    transition: { type: 'spring', duration: 0.25, bounce: 0, staggerChildren: 0.02 },\n  },\n};\n\ntype DropdownMenuContentProps = {\n  className?: string;\n  children: ReactNode;\n};\n\nexport function DropdownMenuContent({ className, children }: DropdownMenuContentProps) {\n  const {\n    isOpen,\n    placement,\n    floatingContext,\n    floatingStyles,\n    setFloating,\n    getFloatingProps,\n    elementsRef,\n    labelsRef,\n  } = useDropdownMenuContext();\n\n  return (\n    <AnimatePresence>\n      {isOpen && (\n        <FloatingFocusManager context={floatingContext} modal={false}>\n          <div\n            ref={setFloating}\n            style={floatingStyles}\n            className=\"z-50 outline-none\"\n            {...getFloatingProps()}\n          >\n            <motion.div\n              variants={menuVariants}\n              initial=\"closed\"\n              animate=\"open\"\n              exit=\"closed\"\n              style={{ transformOrigin: transformOrigin(placement) }}\n              className={cn(\n                'min-w-48 rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg',\n                className,\n              )}\n            >\n              <FloatingList elementsRef={elementsRef} labelsRef={labelsRef}>\n                {children}\n              </FloatingList>\n            </motion.div>\n          </div>\n        </FloatingFocusManager>\n      )}\n    </AnimatePresence>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/dropdown-menu-content.tsx"
+    },
+    {
+      "path": "src/registry/dropdown-menu/dropdown-menu-item.tsx",
+      "content": "'use client';\n\nimport { useListItem } from '@floating-ui/react';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { motion, type Variants } from 'motion/react';\nimport { Children, type ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\nimport { useDropdownMenuContext } from './dropdown-menu-context';\n\nconst itemVariants = cva(\n  [\n    'flex w-full cursor-default items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm outline-none select-none',\n    'disabled:pointer-events-none disabled:opacity-50',\n  ],\n  {\n    variants: {\n      variant: {\n        default: 'focus:bg-accent focus:text-accent-foreground',\n        destructive: 'text-destructive focus:bg-destructive/10',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n    },\n  },\n);\n\n// Timed like the menu: a quick fade in, and out as fast as the menu closes.\nconst enterVariants: Variants = {\n  closed: { opacity: 0, y: -2, transition: { duration: 0.1 } },\n  open: { opacity: 1, y: 0, transition: { duration: 0.15, ease: 'easeOut' } },\n};\n\n// Typeahead label from the text parts of the children, e.g. \"Duplicate\" for `Duplicate <Shortcut />`.\nfunction textOf(children: ReactNode) {\n  const parts = Children.toArray(children).filter((child) => typeof child === 'string');\n  return parts.join('').trim() || null;\n}\n\ntype DropdownMenuItemProps = VariantProps<typeof itemVariants> & {\n  onSelect?: () => void;\n  disabled?: boolean;\n  /** Text for typeahead. Defaults to the text in `children`. */\n  textValue?: string;\n  className?: string;\n  children: ReactNode;\n};\n\nexport function DropdownMenuItem({\n  onSelect,\n  disabled = false,\n  textValue,\n  variant,\n  className,\n  children,\n}: DropdownMenuItemProps) {\n  const { activeIndex, setIsOpen, getItemProps } = useDropdownMenuContext();\n  const { ref, index } = useListItem({\n    label: disabled ? null : (textValue ?? textOf(children)),\n  });\n\n  return (\n    // A plain <button> so it always gets Floating UI's latest ref (it changes once the item knows\n    // its index). The cascade animates the inner span, which inherits the menu's variants.\n    <button\n      ref={ref}\n      type=\"button\"\n      role=\"menuitem\"\n      disabled={disabled}\n      tabIndex={activeIndex === index ? 0 : -1}\n      className={cn(itemVariants({ variant }), className)}\n      {...getItemProps({\n        onClick: () => {\n          onSelect?.();\n          setIsOpen(false);\n        },\n      })}\n    >\n      <motion.span variants={enterVariants} className=\"flex flex-1 items-center gap-2\">\n        {children}\n      </motion.span>\n    </button>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/dropdown-menu-item.tsx"
+    },
+    {
+      "path": "src/registry/dropdown-menu/dropdown-menu-parts.tsx",
+      "content": "import type { ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\n\ntype PartProps = {\n  className?: string;\n  children?: ReactNode;\n};\n\nexport function DropdownMenuLabel({ className, children }: PartProps) {\n  return (\n    <div className={cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', className)}>\n      {children}\n    </div>\n  );\n}\n\nexport function DropdownMenuSeparator({ className }: PartProps) {\n  return <div role=\"separator\" className={cn('-mx-1 my-1 h-px bg-border', className)} />;\n}\n\nexport function DropdownMenuShortcut({ className, children }: PartProps) {\n  return (\n    <span className={cn('ml-auto pl-4 text-xs tracking-widest text-muted-foreground', className)}>\n      {children}\n    </span>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/dropdown-menu-parts.tsx"
+    },
+    {
+      "path": "src/registry/dropdown-menu/dropdown-menu-context.ts",
+      "content": "'use client';\n\nimport { createContext, useContext } from 'react';\nimport type { DropdownMenuState } from './use-dropdown-menu';\n\nexport const DropdownMenuContext = createContext<DropdownMenuState | null>(null);\n\nexport function useDropdownMenuContext() {\n  const context = useContext(DropdownMenuContext);\n  if (!context) throw new Error('DropdownMenu parts must be rendered inside <DropdownMenu>.');\n  return context;\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/dropdown-menu-context.ts"
+    },
+    {
+      "path": "src/registry/dropdown-menu/use-dropdown-menu.ts",
+      "content": "import {\n  autoUpdate,\n  flip,\n  offset,\n  shift,\n  useClick,\n  useDismiss,\n  useFloating,\n  useInteractions,\n  useListNavigation,\n  useRole,\n  useTypeahead,\n  type Placement,\n} from '@floating-ui/react';\nimport { useRef, useState } from 'react';\n\n/** Positioning plus the WAI-ARIA menu behavior: arrows, Home/End, typeahead, Esc, click outside. */\nexport function useDropdownMenu(placement: Placement) {\n  const [isOpen, setIsOpen] = useState(false);\n  const [activeIndex, setActiveIndex] = useState<number | null>(null);\n  const elementsRef = useRef<Array<HTMLElement | null>>([]);\n  const labelsRef = useRef<Array<string | null>>([]);\n\n  const floating = useFloating({\n    open: isOpen,\n    onOpenChange: setIsOpen,\n    placement,\n    // Fixed + rendered in place (no portal): escapes `overflow: hidden` parents, and the items exist\n    // on the same render the menu opens, so keyboard opening can focus the first one.\n    strategy: 'fixed',\n    middleware: [offset(6), flip({ padding: 8 }), shift({ padding: 8 })],\n    whileElementsMounted: autoUpdate,\n  });\n\n  const interactions = useInteractions([\n    useClick(floating.context),\n    useRole(floating.context, { role: 'menu' }),\n    useDismiss(floating.context),\n    useListNavigation(floating.context, {\n      listRef: elementsRef,\n      activeIndex,\n      onNavigate: setActiveIndex,\n      loop: true,\n    }),\n    useTypeahead(floating.context, {\n      listRef: labelsRef,\n      activeIndex,\n      onMatch: isOpen ? setActiveIndex : undefined,\n    }),\n  ]);\n\n  return {\n    ...interactions,\n    isOpen,\n    setIsOpen,\n    activeIndex,\n    elementsRef,\n    labelsRef,\n    placement: floating.placement,\n    floatingContext: floating.context,\n    floatingStyles: floating.floatingStyles,\n    setReference: floating.refs.setReference,\n    setFloating: floating.refs.setFloating,\n  };\n}\n\nexport type DropdownMenuState = ReturnType<typeof useDropdownMenu>;\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/use-dropdown-menu.ts"
+    },
+    {
+      "path": "src/registry/dropdown-menu/transform-origin.ts",
+      "content": "import type { Placement } from '@floating-ui/react';\n\nconst alignX = { start: 'left', end: 'right' } as const;\nconst alignY = { start: 'top', end: 'bottom' } as const;\n\n/** The corner or edge touching the trigger, so the menu grows out of it (also after a flip). */\nexport function transformOrigin(placement: Placement) {\n  const [side, align] = placement.split('-') as [string, 'start' | 'end' | undefined];\n\n  if (side === 'top' || side === 'bottom') {\n    return `${align ? alignX[align] : 'center'} ${side === 'bottom' ? 'top' : 'bottom'}`;\n  }\n  return `${side === 'right' ? 'left' : 'right'} ${align ? alignY[align] : 'center'}`;\n}\n",
+      "type": "registry:component",
+      "target": "components/dropdown-menu/transform-origin.ts"
+    }
+  ],
+  "type": "registry:component"
+}

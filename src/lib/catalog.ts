@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import AnimatedTabsDemo from '@/demos/animated-tabs-demo';
 import CopyButtonDemo from '@/demos/copy-button-demo';
+import DropdownMenuDemo from '@/demos/dropdown-menu-demo';
 import SwitchCssDemo from '@/demos/switch-css-demo';
 import SwitchDemo from '@/demos/switch-demo';
 import ThemeToggleDemo from '@/demos/theme-toggle-demo';
@@ -26,6 +27,32 @@ export type CatalogEntry = {
  * 3. an entry here + an item in registry.json
  */
 export const catalog: CatalogEntry[] = [
+  {
+    slug: 'dropdown-menu',
+    title: 'Dropdown Menu',
+    description:
+      'Menu that grows out of its trigger, even after flipping, with a quick item cascade, typeahead and full keyboard support.',
+    techniques: [
+      'transform-origin',
+      'staggerChildren',
+      'Floating UI',
+      'a11y: menu pattern',
+      'compound components',
+    ],
+    addedAt: '2026-09-27',
+    Demo: DropdownMenuDemo,
+    files: [
+      'dropdown-menu/dropdown-menu.tsx',
+      'dropdown-menu/dropdown-menu-trigger.tsx',
+      'dropdown-menu/dropdown-menu-content.tsx',
+      'dropdown-menu/dropdown-menu-item.tsx',
+      'dropdown-menu/dropdown-menu-parts.tsx',
+      'dropdown-menu/use-dropdown-menu.ts',
+      'dropdown-menu/transform-origin.ts',
+      'dropdown-menu/dropdown-menu-context.ts',
+      'dropdown-menu/index.ts',
+    ],
+  },
   {
     slug: 'theme-toggle',
     title: 'Theme Toggle',

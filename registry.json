@@ -4,6 +4,61 @@
   "homepage": "https://tcosta.dev",
   "items": [
     {
+      "name": "dropdown-menu",
+      "type": "registry:component",
+      "title": "Dropdown Menu",
+      "description": "Compound dropdown menu that grows out of its trigger (also after flipping), with a quick item cascade, typeahead and the WAI-ARIA menu keyboard pattern.",
+      "dependencies": ["motion", "@floating-ui/react", "class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "src/registry/dropdown-menu/index.ts",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/index.ts"
+        },
+        {
+          "path": "src/registry/dropdown-menu/dropdown-menu.tsx",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/dropdown-menu.tsx"
+        },
+        {
+          "path": "src/registry/dropdown-menu/dropdown-menu-trigger.tsx",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/dropdown-menu-trigger.tsx"
+        },
+        {
+          "path": "src/registry/dropdown-menu/dropdown-menu-content.tsx",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/dropdown-menu-content.tsx"
+        },
+        {
+          "path": "src/registry/dropdown-menu/dropdown-menu-item.tsx",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/dropdown-menu-item.tsx"
+        },
+        {
+          "path": "src/registry/dropdown-menu/dropdown-menu-parts.tsx",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/dropdown-menu-parts.tsx"
+        },
+        {
+          "path": "src/registry/dropdown-menu/dropdown-menu-context.ts",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/dropdown-menu-context.ts"
+        },
+        {
+          "path": "src/registry/dropdown-menu/use-dropdown-menu.ts",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/use-dropdown-menu.ts"
+        },
+        {
+          "path": "src/registry/dropdown-menu/transform-origin.ts",
+          "type": "registry:component",
+          "target": "components/dropdown-menu/transform-origin.ts"
+        }
+      ]
+    },
+    {
       "name": "theme-toggle",
       "type": "registry:component",
       "title": "Theme Toggle",
