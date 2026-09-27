@@ -30,6 +30,7 @@ export function Button({
 
   return (
     <button
+      data-slot="button"
       type={type}
       aria-busy={loading || undefined}
       onClick={handleClick}

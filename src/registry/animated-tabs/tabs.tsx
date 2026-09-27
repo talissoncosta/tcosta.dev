@@ -15,7 +15,9 @@ export function Tabs({ value, onValueChange, className, children }: TabsProps) {
 
   return (
     <TabsContext value={{ id, value, onValueChange }}>
-      <div className={className}>{children}</div>
+      <div data-slot="tabs" className={className}>
+        {children}
+      </div>
     </TabsContext>
   );
 }

@@ -46,6 +46,7 @@ export function SwitchCss({
   return (
     <button
       type="button"
+      data-slot="switch"
       role="switch"
       aria-checked={checked}
       data-state={checked ? 'checked' : 'unchecked'}
@@ -58,7 +59,7 @@ export function SwitchCss({
       className={cn(trackClassName, className)}
       {...props}
     >
-      <span className={thumbClassName} />
+      <span data-slot="switch-thumb" className={thumbClassName} />
     </button>
   );
 }

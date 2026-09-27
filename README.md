@@ -52,6 +52,8 @@ Stack: Next.js 16 (App Router, static export) · React 19 · Tailwind CSS 4 · M
 
 The gallery, the component page, its social card and the sitemap pick it up automatically.
 
+Every component marks its root (and its named parts) with `data-slot="<name>"`, following the shadcn/ui convention. Components built on another override it with the more specific name (an `IconButton` renders `data-slot="icon-button"`, not `"button"`). Tools can then tell design-system controls from hand-rolled ones in the rendered page, whatever the styling stack.
+
 ### Principles
 
 - Accessible first (roles, keyboard, labels), animation second.

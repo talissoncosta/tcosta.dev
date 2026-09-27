@@ -23,6 +23,7 @@ export function Toaster({ visibleToasts = 3 }: { visibleToasts?: number }) {
 
   return (
     <section
+      data-slot="toaster"
       aria-label="Notifications"
       className="pointer-events-none fixed right-4 bottom-4 z-50 w-[min(356px,calc(100vw-2rem))]"
     >

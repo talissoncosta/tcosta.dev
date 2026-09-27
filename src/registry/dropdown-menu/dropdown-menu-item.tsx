@@ -65,6 +65,7 @@ export function DropdownMenuItem({
     <button
       ref={ref}
       type="button"
+      data-slot="dropdown-menu-item"
       role="menuitem"
       disabled={disabled}
       tabIndex={activeIndex === index ? 0 : -1}

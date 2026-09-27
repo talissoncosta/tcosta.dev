@@ -60,6 +60,7 @@ export function ToastItem({
 
   return (
     <motion.li
+      data-slot="toast"
       ref={scope}
       tabIndex={0}
       aria-hidden={!isInStack || undefined}

@@ -60,6 +60,7 @@ export function ToastContent({ toast, onDismiss }: ToastContentProps) {
 
       {action && (
         <Button
+          data-slot="toast-action"
           size="sm"
           onClick={() => {
             action.onClick();
@@ -72,6 +73,7 @@ export function ToastContent({ toast, onDismiss }: ToastContentProps) {
       )}
 
       <IconButton
+        data-slot="toast-close"
         label="Dismiss notification"
         variant="ghost"
         size="sm"

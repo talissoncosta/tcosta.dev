@@ -29,6 +29,7 @@ export function SwitchThumb({ size, checked, busy, draggable, icon, dragProps }:
 
   return (
     <motion.span
+      data-slot="switch-thumb"
       layout
       transition={thumbTransition}
       variants={{ idle: { width: thumb }, pressed: { width: stretched } }}
