@@ -8,9 +8,7 @@
       "type": "registry:component",
       "title": "Toast",
       "description": "Stacked toasts with hover-to-expand, swipe to dismiss, pausing timers and promise toasts.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/toast/toast.tsx",
@@ -23,9 +21,7 @@
       "type": "registry:component",
       "title": "Switch",
       "description": "Springy, draggable switch with async (optimistic/pessimistic) changes, shake-on-error, icons, custom color and native form support.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/switch/switch.tsx",
@@ -50,9 +46,7 @@
       "type": "registry:component",
       "title": "Copy Button",
       "description": "Icon morphs from copy to check with a blur-scale crossfade, then the check draws itself.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/copy-button/copy-button.tsx",
@@ -70,24 +64,52 @@
           "target": "components/copy-button/use-copy-to-clipboard.ts"
         }
       ],
-      "registryDependencies": [
-        "utils"
-      ]
+      "registryDependencies": ["utils"]
     },
     {
       "name": "animated-tabs",
       "type": "registry:component",
       "title": "Animated Tabs",
-      "description": "Segmented tabs with a pill that slides between items using a shared layout animation.",
-      "dependencies": [
-        "motion"
-      ],
+      "description": "Compound tabs (Tabs, TabsList, TabsTrigger, TabsContent) whose active pill slides between items, with the WAI-ARIA keyboard pattern.",
+      "dependencies": ["motion"],
       "files": [
         {
-          "path": "src/registry/animated-tabs/animated-tabs.tsx",
-          "type": "registry:component"
+          "path": "src/registry/animated-tabs/index.ts",
+          "type": "registry:component",
+          "target": "components/animated-tabs/index.ts"
+        },
+        {
+          "path": "src/registry/animated-tabs/tabs.tsx",
+          "type": "registry:component",
+          "target": "components/animated-tabs/tabs.tsx"
+        },
+        {
+          "path": "src/registry/animated-tabs/tabs-list.tsx",
+          "type": "registry:component",
+          "target": "components/animated-tabs/tabs-list.tsx"
+        },
+        {
+          "path": "src/registry/animated-tabs/tabs-trigger.tsx",
+          "type": "registry:component",
+          "target": "components/animated-tabs/tabs-trigger.tsx"
+        },
+        {
+          "path": "src/registry/animated-tabs/tabs-content.tsx",
+          "type": "registry:component",
+          "target": "components/animated-tabs/tabs-content.tsx"
+        },
+        {
+          "path": "src/registry/animated-tabs/tabs-context.ts",
+          "type": "registry:component",
+          "target": "components/animated-tabs/tabs-context.ts"
+        },
+        {
+          "path": "src/registry/animated-tabs/use-tabs-keyboard.ts",
+          "type": "registry:component",
+          "target": "components/animated-tabs/use-tabs-keyboard.ts"
         }
-      ]
+      ],
+      "registryDependencies": ["utils"]
     }
   ]
 }

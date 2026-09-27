@@ -1,47 +1,51 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { AnimatedTabs, tabPanelProps } from '@/registry/animated-tabs/animated-tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/animated-tabs';
 
-const TABS = [
-  { value: 'overview', label: 'Overview' },
-  { value: 'activity', label: 'Activity' },
-  { value: 'settings', label: 'Settings' },
+const sections = [
+  {
+    value: 'overview',
+    label: 'Overview',
+    text: 'A shared layoutId lets the pill travel between tabs instead of blinking.',
+  },
+  {
+    value: 'activity',
+    label: 'Activity',
+    text: 'Try ← / → — keyboard navigation follows the WAI-ARIA tabs pattern.',
+  },
+  {
+    value: 'settings',
+    label: 'Settings',
+    text: 'With reduced motion enabled in your OS, the pill jumps instead of sliding.',
+  },
 ];
-
-const COPY: Record<string, string> = {
-  overview: 'A shared layoutId lets the pill travel between tabs instead of blinking.',
-  activity: 'Try ← / → — keyboard navigation follows the WAI-ARIA tabs pattern.',
-  settings: 'With reduced motion enabled in your OS, the pill jumps instead of sliding.',
-};
 
 export default function AnimatedTabsDemo() {
   const [tab, setTab] = useState('overview');
+
   return (
-    <div className="flex w-full max-w-sm flex-col items-center gap-6">
-      <AnimatedTabs
-        id="demo-tabs"
-        label="Demo sections"
-        tabs={TABS}
-        value={tab}
-        onValueChange={setTab}
-      />
-      <div className="h-12 w-full text-center text-sm text-neutral-500">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p
-            key={tab}
-            {...tabPanelProps('demo-tabs', tab)}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="outline-none"
-          >
-            {COPY[tab]}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-    </div>
+    <Tabs
+      value={tab}
+      onValueChange={setTab}
+      className="flex w-full max-w-sm flex-col items-center gap-6"
+    >
+      <TabsList label="Demo sections">
+        {sections.map(({ value, label }) => (
+          <TabsTrigger key={value} value={value}>
+            {label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {sections.map(({ value, text }) => (
+        <TabsContent
+          key={value}
+          value={value}
+          className="h-12 text-center text-sm text-muted-foreground"
+        >
+          {text}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 }

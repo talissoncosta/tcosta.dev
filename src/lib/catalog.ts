@@ -92,7 +92,15 @@ export const catalog: CatalogEntry[] = [
     techniques: ['layoutId', 'spring', 'a11y: tabs pattern'],
     addedAt: '2026-09-27',
     Demo: AnimatedTabsDemo,
-    files: ['animated-tabs/animated-tabs.tsx'],
+    files: [
+      'animated-tabs/tabs.tsx',
+      'animated-tabs/tabs-list.tsx',
+      'animated-tabs/tabs-trigger.tsx',
+      'animated-tabs/tabs-content.tsx',
+      'animated-tabs/tabs-context.ts',
+      'animated-tabs/use-tabs-keyboard.ts',
+      'animated-tabs/index.ts',
+    ],
   },
 ].sort((a, b) => b.addedAt.localeCompare(a.addedAt));
 

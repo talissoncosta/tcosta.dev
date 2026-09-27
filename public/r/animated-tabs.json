@@ -2,15 +2,55 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "animated-tabs",
   "title": "Animated Tabs",
-  "description": "Segmented tabs with a pill that slides between items using a shared layout animation.",
+  "description": "Compound tabs (Tabs, TabsList, TabsTrigger, TabsContent) whose active pill slides between items, with the WAI-ARIA keyboard pattern.",
   "dependencies": [
     "motion"
   ],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
-      "path": "src/registry/animated-tabs/animated-tabs.tsx",
-      "content": "'use client';\n\nimport { motion, type Transition } from 'motion/react';\nimport { useId, useRef, type KeyboardEvent, type ReactNode } from 'react';\n\nexport type AnimatedTab = { value: string; label: ReactNode };\n\ntype AnimatedTabsProps = {\n  tabs: AnimatedTab[];\n  value: string;\n  onValueChange: (value: string) => void;\n  /** Accessible name for the tab list. */\n  label: string;\n  /** Base id used to link tabs and panels. Pass one if you render panels (see `tabPanelProps`). */\n  id?: string;\n  className?: string;\n};\n\n/** Props for a panel so it is correctly linked to its tab. */\nexport function tabPanelProps(id: string, value: string) {\n  return {\n    role: 'tabpanel' as const,\n    id: `${id}-panel-${value}`,\n    'aria-labelledby': `${id}-tab-${value}`,\n    tabIndex: 0,\n  };\n}\n\n// Snappy with a hint of overshoot, so the pill feels physical when it lands.\nconst indicatorTransition: Transition = { type: 'spring', duration: 0.35, bounce: 0.2 };\n\n/**\n * Segmented tabs whose active pill slides between items (shared layout animation).\n * Implements the WAI-ARIA tabs keyboard pattern: ←/→ move, Home/End jump.\n * Link panels with `tabPanelProps(id, value)`.\n */\nexport function AnimatedTabs({\n  tabs,\n  value,\n  onValueChange,\n  label,\n  id: idProp,\n  className = '',\n}: AnimatedTabsProps) {\n  const generatedId = useId();\n  const id = idProp ?? generatedId;\n  const refs = useRef<(HTMLButtonElement | null)[]>([]);\n\n  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {\n    const current = tabs.findIndex((t) => t.value === value);\n    const last = tabs.length - 1;\n    const next =\n      event.key === 'ArrowRight'\n        ? current === last\n          ? 0\n          : current + 1\n        : event.key === 'ArrowLeft'\n          ? current === 0\n            ? last\n            : current - 1\n          : event.key === 'Home'\n            ? 0\n            : event.key === 'End'\n              ? last\n              : -1;\n    if (next === -1) return;\n    event.preventDefault();\n    onValueChange(tabs[next].value);\n    refs.current[next]?.focus();\n  };\n\n  return (\n    <div\n      role=\"tablist\"\n      aria-label={label}\n      onKeyDown={onKeyDown}\n      className={`inline-flex items-center gap-1 rounded-full bg-neutral-100 p-1 dark:bg-neutral-800 ${className}`}\n    >\n      {tabs.map((tab, i) => {\n        const selected = tab.value === value;\n        return (\n          <button\n            key={tab.value}\n            ref={(el) => {\n              refs.current[i] = el;\n            }}\n            type=\"button\"\n            role=\"tab\"\n            id={`${id}-tab-${tab.value}`}\n            aria-selected={selected}\n            aria-controls={`${id}-panel-${tab.value}`}\n            tabIndex={selected ? 0 : -1}\n            onClick={() => onValueChange(tab.value)}\n            className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-neutral-100 ${\n              selected\n                ? 'text-neutral-900 dark:text-neutral-50'\n                : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200'\n            }`}\n          >\n            {selected && (\n              <motion.span\n                layoutId={`${id}-indicator`}\n                transition={indicatorTransition}\n                className=\"absolute inset-0 rounded-full bg-white shadow-sm ring-1 ring-black/5 dark:bg-neutral-950 dark:ring-white/10\"\n              />\n            )}\n            <span className=\"relative\">{tab.label}</span>\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
-      "type": "registry:component"
+      "path": "src/registry/animated-tabs/index.ts",
+      "content": "export { Tabs } from './tabs';\nexport { TabsContent } from './tabs-content';\nexport { TabsList } from './tabs-list';\nexport { TabsTrigger } from './tabs-trigger';\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/index.ts"
+    },
+    {
+      "path": "src/registry/animated-tabs/tabs.tsx",
+      "content": "'use client';\n\nimport { useId, type ReactNode } from 'react';\nimport { TabsContext } from './tabs-context';\n\ntype TabsProps = {\n  value: string;\n  onValueChange: (value: string) => void;\n  className?: string;\n  children: ReactNode;\n};\n\nexport function Tabs({ value, onValueChange, className, children }: TabsProps) {\n  const id = useId();\n\n  return (\n    <TabsContext value={{ id, value, onValueChange }}>\n      <div className={className}>{children}</div>\n    </TabsContext>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/tabs.tsx"
+    },
+    {
+      "path": "src/registry/animated-tabs/tabs-list.tsx",
+      "content": "'use client';\n\nimport type { ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\nimport { useTabs } from './tabs-context';\nimport { useTabsKeyboard } from './use-tabs-keyboard';\n\ntype TabsListProps = {\n  label: string;\n  className?: string;\n  children: ReactNode;\n};\n\nexport function TabsList({ label, className, children }: TabsListProps) {\n  const { onValueChange } = useTabs();\n  const onKeyDown = useTabsKeyboard(onValueChange);\n\n  return (\n    <div\n      role=\"tablist\"\n      aria-label={label}\n      onKeyDown={onKeyDown}\n      className={cn('inline-flex items-center gap-1 rounded-full bg-muted p-1', className)}\n    >\n      {children}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/tabs-list.tsx"
+    },
+    {
+      "path": "src/registry/animated-tabs/tabs-trigger.tsx",
+      "content": "'use client';\n\nimport { motion } from 'motion/react';\nimport type { ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\nimport { contentId, triggerId, useTabs } from './tabs-context';\n\ntype TabsTriggerProps = {\n  value: string;\n  className?: string;\n  children: ReactNode;\n};\n\nexport function TabsTrigger({ value, className, children }: TabsTriggerProps) {\n  const tabs = useTabs();\n  const isSelected = tabs.value === value;\n\n  return (\n    <button\n      type=\"button\"\n      role=\"tab\"\n      id={triggerId(tabs.id, value)}\n      data-value={value}\n      aria-selected={isSelected}\n      aria-controls={contentId(tabs.id, value)}\n      tabIndex={isSelected ? 0 : -1}\n      onClick={() => tabs.onValueChange(value)}\n      className={cn(\n        'relative rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors duration-200 outline-none',\n        'hover:text-foreground aria-selected:text-foreground',\n        'focus-visible:ring-[3px] focus-visible:ring-ring/50',\n        className,\n      )}\n    >\n      {isSelected && (\n        <motion.span\n          layoutId={`${tabs.id}-indicator`}\n          transition={{ type: 'spring', duration: 0.35, bounce: 0.2 }}\n          className=\"absolute inset-0 rounded-full bg-background shadow-sm ring-1 ring-border\"\n        />\n      )}\n      <span className=\"relative\">{children}</span>\n    </button>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/tabs-trigger.tsx"
+    },
+    {
+      "path": "src/registry/animated-tabs/tabs-content.tsx",
+      "content": "'use client';\n\nimport { motion } from 'motion/react';\nimport type { ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\nimport { contentId, triggerId, useTabs } from './tabs-context';\n\ntype TabsContentProps = {\n  value: string;\n  className?: string;\n  children: ReactNode;\n};\n\nexport function TabsContent({ value, className, children }: TabsContentProps) {\n  const tabs = useTabs();\n  if (tabs.value !== value) return null;\n\n  return (\n    <motion.div\n      role=\"tabpanel\"\n      id={contentId(tabs.id, value)}\n      aria-labelledby={triggerId(tabs.id, value)}\n      tabIndex={0}\n      initial={{ opacity: 0, y: 4 }}\n      animate={{ opacity: 1, y: 0 }}\n      transition={{ duration: 0.15, ease: 'easeOut' }}\n      className={cn('outline-none', className)}\n    >\n      {children}\n    </motion.div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/tabs-content.tsx"
+    },
+    {
+      "path": "src/registry/animated-tabs/tabs-context.ts",
+      "content": "'use client';\n\nimport { createContext, useContext } from 'react';\n\ntype TabsContextValue = {\n  id: string;\n  value: string;\n  onValueChange: (value: string) => void;\n};\n\nexport const TabsContext = createContext<TabsContextValue | null>(null);\n\nexport function useTabs() {\n  const context = useContext(TabsContext);\n  if (!context) throw new Error('Tabs parts must be rendered inside <Tabs>.');\n  return context;\n}\n\nexport const triggerId = (id: string, value: string) => `${id}-tab-${value}`;\nexport const contentId = (id: string, value: string) => `${id}-panel-${value}`;\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/tabs-context.ts"
+    },
+    {
+      "path": "src/registry/animated-tabs/use-tabs-keyboard.ts",
+      "content": "import type { KeyboardEvent } from 'react';\n\nfunction nextIndex(key: string, current: number, count: number) {\n  switch (key) {\n    case 'ArrowRight':\n      return (current + 1) % count;\n    case 'ArrowLeft':\n      return (current - 1 + count) % count;\n    case 'Home':\n      return 0;\n    case 'End':\n      return count - 1;\n  }\n}\n\n/** WAI-ARIA tabs keyboard pattern: ←/→ move (wrapping), Home/End jump. */\nexport function useTabsKeyboard(onSelect: (value: string) => void) {\n  return (event: KeyboardEvent<HTMLElement>) => {\n    const tabs = [...event.currentTarget.querySelectorAll<HTMLElement>('[role=\"tab\"]')];\n    const next = nextIndex(event.key, tabs.indexOf(event.target as HTMLElement), tabs.length);\n    if (next === undefined) return;\n\n    event.preventDefault();\n    tabs[next].focus();\n    onSelect(tabs[next].dataset.value!);\n  };\n}\n",
+      "type": "registry:component",
+      "target": "components/animated-tabs/use-tabs-keyboard.ts"
     }
   ],
   "type": "registry:component"
