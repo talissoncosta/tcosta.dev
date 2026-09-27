@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Container } from '@/components/site/container';
 import { PageHeader } from '@/components/site/page-header';
 import { TextLink } from '@/components/site/text-link';
 import { pageMetadata } from '@/lib/metadata';
@@ -22,9 +23,9 @@ const dateFormat = new Intl.DateTimeFormat('en', {
 
 export default function WritingPage() {
   return (
-    <>
+    <Container size="prose">
       <PageHeader title="Writing" description={description} />
-      <ul className="flex max-w-2xl flex-col gap-8">
+      <ul className="flex flex-col gap-8">
         {articles.map(({ title, description, date, url }) => (
           <li key={url}>
             <time dateTime={date} className="text-sm text-muted-foreground tabular-nums">
@@ -39,6 +40,6 @@ export default function WritingPage() {
           </li>
         ))}
       </ul>
-    </>
+    </Container>
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Container } from '@/components/site/container';
 import { DemoCard } from '@/components/site/demo-card';
 import { PageHeader } from '@/components/site/page-header';
 import { catalog } from '@/lib/catalog';
@@ -16,18 +17,18 @@ export const metadata: Metadata = pageMetadata({
 
 export default function LabPage() {
   return (
-    <>
+    <Container size="wide">
       <PageHeader
         title="Small components, polished until they feel right."
         description={description}
       />
-      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {catalog.map((entry) => (
           <li key={entry.slug}>
             <DemoCard entry={entry} showDescription />
           </li>
         ))}
       </ul>
-    </>
+    </Container>
   );
 }
