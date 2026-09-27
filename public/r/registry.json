@@ -11,10 +11,57 @@
       "dependencies": ["motion"],
       "files": [
         {
-          "path": "src/registry/toast/toast.tsx",
-          "type": "registry:component"
+          "path": "src/registry/toast/index.ts",
+          "type": "registry:component",
+          "target": "components/toast/index.ts"
+        },
+        {
+          "path": "src/registry/toast/toaster.tsx",
+          "type": "registry:component",
+          "target": "components/toast/toaster.tsx"
+        },
+        {
+          "path": "src/registry/toast/toast-item.tsx",
+          "type": "registry:component",
+          "target": "components/toast/toast-item.tsx"
+        },
+        {
+          "path": "src/registry/toast/toast-content.tsx",
+          "type": "registry:component",
+          "target": "components/toast/toast-content.tsx"
+        },
+        {
+          "path": "src/registry/toast/toast-store.ts",
+          "type": "registry:component",
+          "target": "components/toast/toast-store.ts"
+        },
+        {
+          "path": "src/registry/toast/use-stack-layout.ts",
+          "type": "registry:component",
+          "target": "components/toast/use-stack-layout.ts"
+        },
+        {
+          "path": "src/registry/toast/use-toast-timer.ts",
+          "type": "registry:component",
+          "target": "components/toast/use-toast-timer.ts"
+        },
+        {
+          "path": "src/registry/toast/use-page-hidden.ts",
+          "type": "registry:component",
+          "target": "components/toast/use-page-hidden.ts"
+        },
+        {
+          "path": "src/registry/toast/config.ts",
+          "type": "registry:component",
+          "target": "components/toast/config.ts"
+        },
+        {
+          "path": "src/registry/toast/icons.tsx",
+          "type": "registry:component",
+          "target": "components/toast/icons.tsx"
         }
-      ]
+      ],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "switch",
