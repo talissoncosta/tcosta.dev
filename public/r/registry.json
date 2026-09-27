@@ -4,6 +4,42 @@
   "homepage": "https://tcosta.dev",
   "items": [
     {
+      "name": "theme-toggle",
+      "type": "registry:component",
+      "title": "Theme Toggle",
+      "description": "Light/dark switch where the new theme grows in a circle from the click (View Transitions API), with a sun/moon morph. Needs next-themes with attribute=\"class\".",
+      "dependencies": ["next-themes"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "src/registry/theme-toggle/index.ts",
+          "type": "registry:component",
+          "target": "components/theme-toggle/index.ts"
+        },
+        {
+          "path": "src/registry/theme-toggle/theme-toggle.tsx",
+          "type": "registry:component",
+          "target": "components/theme-toggle/theme-toggle.tsx"
+        },
+        {
+          "path": "src/registry/theme-toggle/use-theme-transition.ts",
+          "type": "registry:component",
+          "target": "components/theme-toggle/use-theme-transition.ts"
+        },
+        {
+          "path": "src/registry/theme-toggle/icons.tsx",
+          "type": "registry:component",
+          "target": "components/theme-toggle/icons.tsx"
+        }
+      ],
+      "css": {
+        "::view-transition-old(root), ::view-transition-new(root)": {
+          "animation": "none",
+          "mix-blend-mode": "normal"
+        }
+      }
+    },
+    {
       "name": "toast",
       "type": "registry:component",
       "title": "Toast",

@@ -3,6 +3,7 @@ import AnimatedTabsDemo from '@/demos/animated-tabs-demo';
 import CopyButtonDemo from '@/demos/copy-button-demo';
 import SwitchCssDemo from '@/demos/switch-css-demo';
 import SwitchDemo from '@/demos/switch-demo';
+import ThemeToggleDemo from '@/demos/theme-toggle-demo';
 import ToastDemo from '@/demos/toast-demo';
 
 export type CatalogEntry = {
@@ -25,6 +26,21 @@ export type CatalogEntry = {
  * 3. an entry here + an item in registry.json
  */
 export const catalog: CatalogEntry[] = [
+  {
+    slug: 'theme-toggle',
+    title: 'Theme Toggle',
+    description:
+      'Light/dark switch where the new theme grows in a circle from the click, with a sun/moon morph.',
+    techniques: ['View Transitions API', 'clip-path', 'next-themes', 'reduced motion'],
+    addedAt: '2026-09-27',
+    Demo: ThemeToggleDemo,
+    files: [
+      'theme-toggle/theme-toggle.tsx',
+      'theme-toggle/use-theme-transition.ts',
+      'theme-toggle/icons.tsx',
+      'theme-toggle/index.ts',
+    ],
+  },
   {
     slug: 'toast',
     title: 'Toast',
