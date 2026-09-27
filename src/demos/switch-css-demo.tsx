@@ -1,10 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { Switch } from '@/registry/switch/switch';
-import { SwitchCss } from '@/registry/switch-css/switch-css';
+import { useRef, useState, type ReactNode } from 'react';
+import { Switch } from '@/registry/switch';
+import { SwitchCss } from '@/registry/switch-css';
 
-/** Side-by-side: real spring (Motion) vs overshooting bezier (CSS). "Mash" interrupts both mid-flight. */
+// Side by side: a real spring (Motion) vs an overshooting bezier (CSS). "Mash" interrupts both.
 export default function SwitchCssDemo() {
   const [on, setOn] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -28,11 +28,11 @@ export default function SwitchCssDemo() {
         <button
           type="button"
           onClick={mash}
-          className="rounded-md border border-neutral-200 bg-white px-3 py-1.5 text-sm font-medium shadow-xs hover:bg-neutral-50 active:scale-[0.97] dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-900"
+          className="rounded-md border bg-background px-3 py-1.5 text-sm font-medium shadow-xs transition-colors hover:bg-accent active:scale-[0.97]"
         >
           Mash (5 toggles in 360 ms)
         </button>
-        <p className="max-w-xs text-center text-xs text-neutral-500">
+        <p className="max-w-xs text-center text-xs text-muted-foreground">
           The spring keeps its velocity when interrupted; the CSS transition restarts from a
           standstill each time.
         </p>
@@ -41,11 +41,11 @@ export default function SwitchCssDemo() {
   );
 }
 
-function Labeled({ label, children }: { label: string; children: React.ReactNode }) {
+function Labeled({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex flex-col items-center gap-3">
       {children}
-      <span className="text-xs text-neutral-500">{label}</span>
+      <span className="text-xs text-muted-foreground">{label}</span>
     </div>
   );
 }

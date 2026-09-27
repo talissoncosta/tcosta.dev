@@ -73,10 +73,18 @@
       "description": "The same switch with zero JS animation \u2014 CSS transitions only.",
       "files": [
         {
+          "path": "src/registry/switch-css/index.ts",
+          "type": "registry:component",
+          "target": "components/switch-css/index.ts"
+        },
+        {
           "path": "src/registry/switch-css/switch-css.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/switch-css/switch-css.tsx"
         }
-      ]
+      ],
+      "registryDependencies": ["utils"],
+      "dependencies": []
     },
     {
       "name": "copy-button",
