@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-toggle",
+  "title": "Theme Toggle",
+  "description": "Light/dark switch where the new theme grows in a circle from the click (View Transitions API), with a sun/moon morph. Needs next-themes with attribute=\"class\".",
+  "dependencies": [
+    "next-themes"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/theme-toggle/index.ts",
+      "content": "export { ThemeToggle } from './theme-toggle';\n",
+      "type": "registry:component",
+      "target": "components/theme-toggle/index.ts"
+    },
+    {
+      "path": "src/registry/theme-toggle/theme-toggle.tsx",
+      "content": "'use client';\n\nimport type { ComponentProps, MouseEvent } from 'react';\nimport { cn } from '@/lib/utils';\nimport { MoonIcon, SunIcon } from './icons';\nimport { useThemeTransition } from './use-theme-transition';\n\ntype ThemeToggleProps = Omit<ComponentProps<'button'>, 'children'>;\n\nexport function ThemeToggle({ className, onClick, ...props }: ThemeToggleProps) {\n  const toggleTheme = useThemeTransition();\n\n  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {\n    onClick?.(event);\n    if (event.defaultPrevented) return;\n    // Keyboard clicks have no pointer position: grow from the button's center instead.\n    const rect = event.currentTarget.getBoundingClientRect();\n    const fromPointer = event.clientX !== 0 || event.clientY !== 0;\n    toggleTheme({\n      x: fromPointer ? event.clientX : rect.left + rect.width / 2,\n      y: fromPointer ? event.clientY : rect.top + rect.height / 2,\n    });\n  };\n\n  return (\n    <button\n      type=\"button\"\n      aria-label=\"Toggle theme\"\n      onClick={handleClick}\n      className={cn(\n        'relative inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors outline-none',\n        'hover:bg-accent hover:text-accent-foreground',\n        'focus-visible:ring-[3px] focus-visible:ring-ring/50',\n        className,\n      )}\n      {...props}\n    >\n      <SunIcon />\n      <MoonIcon />\n    </button>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/theme-toggle/theme-toggle.tsx"
+    },
+    {
+      "path": "src/registry/theme-toggle/use-theme-transition.ts",
+      "content": "import { useTheme } from 'next-themes';\n\ntype Origin = { x: number; y: number };\n\n// Radius that covers the whole viewport from the origin, so the circle ends past every corner.\nfunction coverRadius({ x, y }: Origin) {\n  return Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));\n}\n\n/** Switches light/dark, revealing the new theme in a circle that grows from `origin`. */\nexport function useThemeTransition() {\n  const { resolvedTheme, setTheme } = useTheme();\n\n  return async (origin: Origin) => {\n    const next = resolvedTheme === 'dark' ? 'light' : 'dark';\n    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;\n\n    if (!document.startViewTransition || reduceMotion) {\n      setTheme(next);\n      return;\n    }\n\n    // Apply the class ourselves so the new snapshot is ready immediately; next-themes persists it.\n    const transition = document.startViewTransition(() => {\n      document.documentElement.classList.toggle('dark', next === 'dark');\n      setTheme(next);\n    });\n    await transition.ready;\n\n    const { x, y } = origin;\n    document.documentElement.animate(\n      {\n        clipPath: [\n          `circle(0px at ${x}px ${y}px)`,\n          `circle(${coverRadius(origin)}px at ${x}px ${y}px)`,\n        ],\n      },\n      {\n        duration: 500,\n        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',\n        pseudoElement: '::view-transition-new(root)',\n      },\n    );\n  };\n}\n",
+      "type": "registry:component",
+      "target": "components/theme-toggle/use-theme-transition.ts"
+    },
+    {
+      "path": "src/registry/theme-toggle/icons.tsx",
+      "content": "import type { ComponentProps } from 'react';\nimport { cn } from '@/lib/utils';\n\nfunction Icon({ className, children }: ComponentProps<'svg'>) {\n  return (\n    <svg\n      width=\"16\"\n      height=\"16\"\n      viewBox=\"0 0 24 24\"\n      fill=\"none\"\n      stroke=\"currentColor\"\n      strokeWidth=\"2\"\n      strokeLinecap=\"round\"\n      strokeLinejoin=\"round\"\n      aria-hidden\n      className={cn(\n        'transition-[scale,rotate,opacity] duration-300 motion-reduce:transition-none',\n        className,\n      )}\n    >\n      {children}\n    </svg>\n  );\n}\n\n// Both icons are always rendered and swapped with `dark:` classes: no hydration mismatch.\nexport function SunIcon() {\n  return (\n    <Icon className=\"scale-100 rotate-0 dark:scale-50 dark:-rotate-90 dark:opacity-0\">\n      <circle cx=\"12\" cy=\"12\" r=\"4\" />\n      <path d=\"M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" />\n    </Icon>\n  );\n}\n\nexport function MoonIcon() {\n  return (\n    <Icon className=\"absolute scale-50 rotate-90 opacity-0 dark:scale-100 dark:rotate-0 dark:opacity-100\">\n      <path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" />\n    </Icon>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/theme-toggle/icons.tsx"
+    }
+  ],
+  "css": {
+    "::view-transition-old(root), ::view-transition-new(root)": {
+      "animation": "none",
+      "mix-blend-mode": "normal"
+    }
+  },
+  "type": "registry:component"
+}

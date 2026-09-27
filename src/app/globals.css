@@ -1,9 +1,11 @@
 @import 'tailwindcss';
 
-@custom-variant dark (@media (prefers-color-scheme: dark));
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* shadcn/ui tokens (neutral). Registry components use these, so they inherit the installer's theme. */
+/* shadcn/ui tokens (neutral). Registry components use these, so they inherit the installer's theme.
+   Dark mode is the `.dark` class on <html> (set by next-themes), the same setup as a shadcn project. */
 :root {
+  color-scheme: light;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -25,27 +27,26 @@
   --ring: oklch(0.708 0 0);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-  }
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
 }
 
 @theme inline {
@@ -86,7 +87,7 @@
   }
 }
 
-/* Shiki dual theme: colors come from CSS variables so light/dark follow the OS. */
+/* Shiki dual theme: colors come from CSS variables, so code follows the site theme. */
 .code pre {
   padding: 1rem 1.25rem;
   background: var(--background);
@@ -94,10 +95,8 @@
 .code span {
   color: var(--shiki-light);
 }
-@media (prefers-color-scheme: dark) {
-  .code span {
-    color: var(--shiki-dark);
-  }
+.dark .code span {
+  color: var(--shiki-dark);
 }
 
 /* Page entrance: `motion-safe:animate-enter enter-<n>`, each step 80ms after the previous. */
@@ -111,6 +110,13 @@
       filter: blur(4px);
     }
   }
+}
+
+/* Theme switch: the new theme is revealed by a clip-path animation (see theme-toggle), not a crossfade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @utility enter-* {

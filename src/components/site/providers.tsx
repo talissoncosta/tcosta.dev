@@ -1,9 +1,13 @@
 'use client';
 
 import { MotionConfig } from 'motion/react';
+import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 
-/** Respect the OS "reduce motion" setting for every Motion animation in the site. */
 export function Providers({ children }: { children: ReactNode }) {
-  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+    </ThemeProvider>
+  );
 }

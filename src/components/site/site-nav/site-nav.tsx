@@ -1,3 +1,4 @@
+import { ThemeToggle } from '@/registry/theme-toggle';
 import { SiteNavLink } from './site-nav-link';
 
 const links = [
@@ -16,6 +17,9 @@ export function SiteNav() {
         ))}
         <li>
           <SiteNavLink href="https://github.com/talissoncosta" label="GitHub" external />
+        </li>
+        <li>
+          <ThemeToggle />
         </li>
       </ul>
     </nav>
