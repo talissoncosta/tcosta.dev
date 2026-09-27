@@ -21,7 +21,7 @@ export default function LabPage() {
       <ul className="grid gap-6 sm:grid-cols-2">
         {catalog.map(({ slug, title, description, Demo }) => (
           <li key={slug} className="flex min-w-0 flex-col gap-3">
-            <Preview compact>
+            <Preview size="compact">
               <Demo />
             </Preview>
             <div>

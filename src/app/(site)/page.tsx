@@ -52,7 +52,7 @@ export default function Home() {
         <ul className="grid gap-6 sm:grid-cols-3">
           {featured.map(({ slug, title, Demo }) => (
             <li key={slug} className="flex min-w-0 flex-col gap-2">
-              <Preview compact>
+              <Preview size="compact">
                 <Demo />
               </Preview>
               <Link href={`/lab/${slug}`} className="text-sm font-medium hover:underline">
