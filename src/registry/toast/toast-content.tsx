@@ -1,18 +1,15 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { Button } from '../button';
+import { IconButton } from '../icon-button';
 import { swapTransition } from './config';
 import { CloseIcon, ToastIcon } from './icons';
 import type { ToastData } from './toast-store';
 
-const actionClassName = cn(
-  'shrink-0 rounded-md bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground',
-  'hover:bg-primary/90 active:scale-[0.97]',
-);
-
+// Revealed on hover/focus, so it also transitions opacity.
 const closeClassName = cn(
-  '-mt-1 -mr-1 flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity',
+  '-mt-1 -mr-1 size-6 text-muted-foreground opacity-0 transition-[opacity,color,background-color,scale]',
   'group-hover:opacity-100 group-focus-visible:opacity-100 focus-visible:opacity-100',
-  'hover:bg-accent hover:text-accent-foreground',
 );
 
 // Icon and title cross-fade when a promise toast turns into success/error.
@@ -62,26 +59,27 @@ export function ToastContent({ toast, onDismiss }: ToastContentProps) {
       </div>
 
       {action && (
-        <button
-          type="button"
+        <Button
+          size="sm"
           onClick={() => {
             action.onClick();
             onDismiss();
           }}
-          className={actionClassName}
+          className="h-7 px-2.5"
         >
           {action.label}
-        </button>
+        </Button>
       )}
 
-      <button
-        type="button"
-        aria-label="Dismiss notification"
+      <IconButton
+        label="Dismiss notification"
+        variant="ghost"
+        size="sm"
         onClick={onDismiss}
         className={closeClassName}
       >
         <CloseIcon />
-      </button>
+      </IconButton>
     </>
   );
 }

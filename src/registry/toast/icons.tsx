@@ -46,6 +46,7 @@ export function CloseIcon() {
     <svg
       width="12"
       height="12"
+      className="size-3"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
