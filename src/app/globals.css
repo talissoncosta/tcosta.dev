@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@custom-variant dark (@media (prefers-color-scheme: dark));
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Shiki dual theme: colors come from CSS variables so light/dark follow the OS. */
+.code pre {
+  padding: 1rem 1.25rem;
+  background: var(--color-white);
+}
+.code span {
+  color: var(--shiki-light);
+}
+@media (prefers-color-scheme: dark) {
+  .code pre {
+    background: var(--color-neutral-950);
+  }
+  .code span {
+    color: var(--shiki-dark);
+  }
+}

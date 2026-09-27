@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "ui-lab",
+  "homepage": "https://example.com",
+  "items": [
+    {
+      "name": "copy-button",
+      "type": "registry:component",
+      "title": "Copy Button",
+      "description": "Icon morphs from copy to check with a blur-scale crossfade, then the check draws itself.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/copy-button/copy-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "animated-tabs",
+      "type": "registry:component",
+      "title": "Animated Tabs",
+      "description": "Segmented tabs with a pill that slides between items using a shared layout animation.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/animated-tabs/animated-tabs.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

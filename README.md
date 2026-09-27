@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UI Lab
 
-## Getting Started
+Small, fluid, animated React components — built in public.
 
-First, run the development server:
+Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · Motion · Shiki.
+
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn install
+yarn dev            # http://localhost:3000
+yarn build          # static build (every component page is prerendered)
+yarn lint
+yarn typecheck
+yarn registry:build # shadcn registry JSON → public/r/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Add a component
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. `src/registry/<slug>/<slug>.tsx` — the component itself (what people copy/install).
+2. `src/demos/<slug>-demo.tsx` — a default-exported demo.
+3. Add an entry to `src/lib/catalog.ts` and an item to `registry.json`.
 
-## Learn More
+The gallery (`/`) and the component page (`/c/<slug>`) pick it up automatically.
 
-To learn more about Next.js, take a look at the following resources:
+## Principles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Respect `prefers-reduced-motion` (global `MotionConfig reducedMotion="user"`).
+- Keyboard and screen-reader friendly first; animation second.
+- Prefer springs and short durations; animate `transform`, `opacity` and `filter`.
+- Your own take on an idea — credit inspiration, don't copy designs pixel for pixel.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Distribution
 
-## Deploy on Vercel
+`yarn registry:build` generates shadcn-compatible JSON in `public/r/`. Once deployed,
+anyone can install a component with:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx shadcn add https://<your-domain>/r/<slug>.json
+```
