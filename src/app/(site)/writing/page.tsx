@@ -1,9 +1,17 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/site/page-header';
 import { TextLink } from '@/components/site/text-link';
+import { pageMetadata } from '@/lib/metadata';
 import { articles } from '@/lib/writing';
 
-export const metadata: Metadata = { title: 'Writing' };
+const description = 'Notes on component APIs and design systems.';
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Writing',
+  description,
+  path: '/writing',
+  image: 'writing',
+});
 
 const dateFormat = new Intl.DateTimeFormat('en', {
   month: 'short',
@@ -15,7 +23,7 @@ const dateFormat = new Intl.DateTimeFormat('en', {
 export default function WritingPage() {
   return (
     <>
-      <PageHeader title="Writing" description="Notes on component APIs and design systems." />
+      <PageHeader title="Writing" description={description} />
       <ul className="flex max-w-2xl flex-col gap-8">
         {articles.map(({ title, description, date, url }) => (
           <li key={url}>

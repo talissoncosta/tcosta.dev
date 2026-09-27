@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { DemoCard } from '@/components/site/demo-card';
 import { Section } from '@/components/site/section';
 import { TextLink } from '@/components/site/text-link';
@@ -5,6 +6,8 @@ import { WorkList } from '@/components/site/work-list';
 import { catalog } from '@/lib/catalog';
 import { work } from '@/lib/work';
 import { articles } from '@/lib/writing';
+
+export const metadata: Metadata = { alternates: { canonical: '/' } };
 
 // Compact demos, so the previews line up at the same height.
 const featured = catalog.filter(({ slug }) =>

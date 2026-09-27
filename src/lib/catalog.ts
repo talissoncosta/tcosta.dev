@@ -38,7 +38,7 @@ export const catalog: CatalogEntry[] = [
       'ResizeObserver',
       'aria-live',
     ],
-    addedAt: '2026-09-29',
+    addedAt: '2026-09-27',
     Demo: ToastDemo,
     files: [
       'toast/toaster.tsx',
@@ -67,7 +67,7 @@ export const catalog: CatalogEntry[] = [
       'a11y: switch role',
       'forms',
     ],
-    addedAt: '2026-09-28',
+    addedAt: '2026-09-27',
     Demo: SwitchDemo,
     files: [
       'switch/switch.tsx',
@@ -86,7 +86,7 @@ export const catalog: CatalogEntry[] = [
     description:
       'The same switch with zero JS animation. Mash it next to the Motion version to feel spring vs bezier.',
     techniques: ['CSS transitions', 'overshoot bezier', 'group-active', 'spring vs bezier'],
-    addedAt: '2026-09-28',
+    addedAt: '2026-09-27',
     Demo: SwitchCssDemo,
     files: ['switch-css/switch-css.tsx'],
   },

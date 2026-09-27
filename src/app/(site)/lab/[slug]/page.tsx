@@ -4,6 +4,7 @@ import { CodeBlock } from '@/components/site/code-block';
 import { Preview } from '@/components/site/preview';
 import { TextLink } from '@/components/site/text-link';
 import { catalog, getEntry } from '@/lib/catalog';
+import { pageMetadata } from '@/lib/metadata';
 
 export const dynamicParams = false;
 
@@ -12,8 +13,15 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(props: PageProps<'/lab/[slug]'>): Promise<Metadata> {
-  const entry = getEntry((await props.params).slug);
-  return entry ? { title: entry.title, description: entry.description } : {};
+  const { slug } = await props.params;
+  const entry = getEntry(slug);
+  if (!entry) return {};
+  return pageMetadata({
+    title: entry.title,
+    description: entry.description,
+    path: `/lab/${slug}`,
+    image: slug,
+  });
 }
 
 export default async function ComponentPage(props: PageProps<'/lab/[slug]'>) {
