@@ -8,12 +8,12 @@ type DemoCardProps = {
 };
 
 export function DemoCard({ entry, showDescription = false }: DemoCardProps) {
-  const { slug, title, description, Demo } = entry;
+  const { slug, title, description, Demo, CardDemo = Demo } = entry;
 
   return (
     <article className="flex flex-col gap-2">
       <Preview size="compact">
-        <Demo />
+        <CardDemo />
       </Preview>
       <div>
         <TextLink href={`/lab/${slug}`} variant="hover" className="text-sm font-medium">

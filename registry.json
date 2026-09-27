@@ -64,7 +64,7 @@
       "title": "Dropdown Menu",
       "description": "Compound dropdown menu that grows out of its trigger (also after flipping), with a quick item cascade, typeahead and the WAI-ARIA menu keyboard pattern.",
       "dependencies": ["motion", "@floating-ui/react", "class-variance-authority"],
-      "registryDependencies": ["utils"],
+      "registryDependencies": ["utils", "https://tcosta.dev/r/button.json"],
       "files": [
         {
           "path": "src/registry/dropdown-menu/index.ts",

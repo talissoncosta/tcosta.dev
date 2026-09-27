@@ -2,6 +2,7 @@
 
 import { useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/registry/button';
 import { Switch } from '@/registry/switch';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -100,26 +101,18 @@ export default function SwitchDemo() {
             {submitted ?? 'Native form: submit / reset'}
           </code>
           <div className="flex shrink-0 gap-2">
-            <button type="reset" className={cn(buttonClassName, 'hover:bg-accent')}>
+            <Button type="reset" variant="ghost" size="sm">
               Reset
-            </button>
-            <button
-              type="submit"
-              className={cn(
-                buttonClassName,
-                'bg-primary font-medium text-primary-foreground hover:bg-primary/90',
-              )}
-            >
+            </Button>
+            <Button type="submit" size="sm">
               Submit
-            </button>
+            </Button>
           </div>
         </div>
       </form>
     </div>
   );
 }
-
-const buttonClassName = 'rounded-md px-3 py-1.5 text-sm transition-colors';
 
 type RowProps = {
   id: string;

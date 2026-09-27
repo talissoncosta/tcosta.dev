@@ -9,7 +9,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "utils"
+    "utils",
+    "https://tcosta.dev/r/button.json"
   ],
   "files": [
     {
@@ -26,7 +27,7 @@
     },
     {
       "path": "src/registry/dropdown-menu/dropdown-menu-trigger.tsx",
-      "content": "'use client';\n\nimport type { ComponentProps } from 'react';\nimport { cn } from '@/lib/utils';\nimport { useDropdownMenuContext } from './dropdown-menu-context';\n\ntype DropdownMenuTriggerProps = Omit<ComponentProps<'button'>, 'ref'>;\n\nexport function DropdownMenuTrigger({ className, ...props }: DropdownMenuTriggerProps) {\n  const { isOpen, setReference, getReferenceProps } = useDropdownMenuContext();\n\n  return (\n    <button\n      type=\"button\"\n      ref={setReference}\n      data-state={isOpen ? 'open' : 'closed'}\n      className={cn(\n        'inline-flex h-9 items-center gap-2 rounded-md border bg-background px-3 text-sm font-medium shadow-xs transition-colors outline-none',\n        'hover:bg-accent data-[state=open]:bg-accent',\n        'focus-visible:ring-[3px] focus-visible:ring-ring/50',\n        className,\n      )}\n      {...getReferenceProps(props)}\n    />\n  );\n}\n",
+      "content": "'use client';\n\nimport type { VariantProps } from 'class-variance-authority';\nimport type { ComponentProps } from 'react';\nimport { cn } from '@/lib/utils';\nimport { buttonVariants } from '../button';\nimport { useDropdownMenuContext } from './dropdown-menu-context';\n\ntype DropdownMenuTriggerProps = Omit<ComponentProps<'button'>, 'ref'> &\n  VariantProps<typeof buttonVariants>;\n\nexport function DropdownMenuTrigger({\n  variant = 'outline',\n  size,\n  className,\n  ...props\n}: DropdownMenuTriggerProps) {\n  const { isOpen, setReference, getReferenceProps } = useDropdownMenuContext();\n\n  return (\n    <button\n      type=\"button\"\n      ref={setReference}\n      data-state={isOpen ? 'open' : 'closed'}\n      className={cn(buttonVariants({ variant, size }), 'data-[state=open]:bg-accent', className)}\n      {...getReferenceProps(props)}\n    />\n  );\n}\n",
       "type": "registry:component",
       "target": "components/dropdown-menu/dropdown-menu-trigger.tsx"
     },

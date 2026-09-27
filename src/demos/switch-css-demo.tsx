@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, type ReactNode } from 'react';
+import { Button } from '@/registry/button';
 import { Switch } from '@/registry/switch';
 import { SwitchCss } from '@/registry/switch-css';
 
@@ -25,13 +26,9 @@ export default function SwitchCssDemo() {
         </Labeled>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <button
-          type="button"
-          onClick={mash}
-          className="rounded-md border bg-background px-3 py-1.5 text-sm font-medium shadow-xs transition-colors hover:bg-accent active:scale-[0.97]"
-        >
+        <Button variant="outline" onClick={mash}>
           Mash (5 toggles in 360 ms)
-        </button>
+        </Button>
         <p className="max-w-xs text-center text-xs text-muted-foreground">
           The spring keeps its velocity when interrupted; the CSS transition restarts from a
           standstill each time.
