@@ -1,5 +1,6 @@
 'use client';
 
+import { MotionConfig } from 'motion/react';
 import { useState, type ReactNode } from 'react';
 import { useReplay } from '@/hooks/use-replay';
 import { useShortcuts } from '@/hooks/use-shortcuts';
@@ -31,7 +32,7 @@ export function RecordStage({ children, backHref }: RecordStageProps) {
 
   return (
     <div className={cn('flex h-dvh items-center justify-center p-4', hasToolbar && 'pb-24')}>
-      {/* `contain` makes the frame the containing block, so fixed pieces (the toaster) stay inside. */}
+      {/* `contain` keeps paint inside the frame. */}
       <div
         style={{
           width: frameWidth(frame.ratio, hasToolbar),
@@ -40,8 +41,22 @@ export function RecordStage({ children, backHref }: RecordStageProps) {
         }}
         className="relative bg-muted/60"
       >
-        <div key={key} style={{ zoom }} className="flex h-full items-center justify-center">
-          {children}
+        {/* Scaled with a transform, not CSS `zoom`: Floating UI positions menus correctly under a
+            transform, and the transformed box is also the containing block for fixed pieces (the
+            toaster). transformPagePoint keeps drags (the switch) following the pointer 1:1. */}
+        <div
+          key={key}
+          style={{
+            width: `${100 / zoom}%`,
+            height: `${100 / zoom}%`,
+            transform: `scale(${zoom})`,
+            transformOrigin: 'top left',
+          }}
+          className="flex items-center justify-center"
+        >
+          <MotionConfig transformPagePoint={({ x, y }) => ({ x: x / zoom, y: y / zoom })}>
+            {children}
+          </MotionConfig>
         </div>
       </div>
 
