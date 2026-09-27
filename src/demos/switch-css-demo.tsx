@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import { Switch } from "@/registry/switch/switch";
-import { SwitchCss } from "@/registry/switch-css/switch-css";
+import { useRef, useState } from 'react';
+import { Switch } from '@/registry/switch/switch';
+import { SwitchCss } from '@/registry/switch-css/switch-css';
 
 /** Side-by-side: real spring (Motion) vs overshooting bezier (CSS). "Mash" interrupts both mid-flight. */
 export default function SwitchCssDemo() {
@@ -33,7 +33,8 @@ export default function SwitchCssDemo() {
           Mash (5 toggles in 360 ms)
         </button>
         <p className="max-w-xs text-center text-xs text-neutral-500">
-          The spring keeps its velocity when interrupted; the CSS transition restarts from a standstill each time.
+          The spring keeps its velocity when interrupted; the CSS transition restarts from a
+          standstill each time.
         </p>
       </div>
     </div>

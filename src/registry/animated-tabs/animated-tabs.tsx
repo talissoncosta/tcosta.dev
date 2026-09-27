@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion, type Transition } from "motion/react";
-import { useId, useRef, type KeyboardEvent, type ReactNode } from "react";
+import { motion, type Transition } from 'motion/react';
+import { useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
 
 export type AnimatedTab = { value: string; label: ReactNode };
 
@@ -19,22 +19,29 @@ type AnimatedTabsProps = {
 /** Props for a panel so it is correctly linked to its tab. */
 export function tabPanelProps(id: string, value: string) {
   return {
-    role: "tabpanel" as const,
+    role: 'tabpanel' as const,
     id: `${id}-panel-${value}`,
-    "aria-labelledby": `${id}-tab-${value}`,
+    'aria-labelledby': `${id}-tab-${value}`,
     tabIndex: 0,
   };
 }
 
 // Snappy with a hint of overshoot, so the pill feels physical when it lands.
-const indicatorTransition: Transition = { type: "spring", duration: 0.35, bounce: 0.2 };
+const indicatorTransition: Transition = { type: 'spring', duration: 0.35, bounce: 0.2 };
 
 /**
  * Segmented tabs whose active pill slides between items (shared layout animation).
  * Implements the WAI-ARIA tabs keyboard pattern: ←/→ move, Home/End jump.
  * Link panels with `tabPanelProps(id, value)`.
  */
-export function AnimatedTabs({ tabs, value, onValueChange, label, id: idProp, className = "" }: AnimatedTabsProps) {
+export function AnimatedTabs({
+  tabs,
+  value,
+  onValueChange,
+  label,
+  id: idProp,
+  className = '',
+}: AnimatedTabsProps) {
   const generatedId = useId();
   const id = idProp ?? generatedId;
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -43,11 +50,19 @@ export function AnimatedTabs({ tabs, value, onValueChange, label, id: idProp, cl
     const current = tabs.findIndex((t) => t.value === value);
     const last = tabs.length - 1;
     const next =
-      event.key === "ArrowRight" ? (current === last ? 0 : current + 1)
-      : event.key === "ArrowLeft" ? (current === 0 ? last : current - 1)
-      : event.key === "Home" ? 0
-      : event.key === "End" ? last
-      : -1;
+      event.key === 'ArrowRight'
+        ? current === last
+          ? 0
+          : current + 1
+        : event.key === 'ArrowLeft'
+          ? current === 0
+            ? last
+            : current - 1
+          : event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? last
+              : -1;
     if (next === -1) return;
     event.preventDefault();
     onValueChange(tabs[next].value);
@@ -76,8 +91,10 @@ export function AnimatedTabs({ tabs, value, onValueChange, label, id: idProp, cl
             aria-controls={`${id}-panel-${tab.value}`}
             tabIndex={selected ? 0 : -1}
             onClick={() => onValueChange(tab.value)}
-            className={`relative rounded-full px-4 py-1.5 text-sm font-medium outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-neutral-100 ${
-              selected ? "text-neutral-900 dark:text-neutral-50" : "text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200"
+            className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-neutral-100 ${
+              selected
+                ? 'text-neutral-900 dark:text-neutral-50'
+                : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200'
             }`}
           >
             {selected && (

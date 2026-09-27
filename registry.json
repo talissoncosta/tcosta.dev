@@ -8,9 +8,7 @@
       "type": "registry:component",
       "title": "Toast",
       "description": "Stacked toasts with hover-to-expand, swipe to dismiss, pausing timers and promise toasts.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/toast/toast.tsx",
@@ -23,9 +21,7 @@
       "type": "registry:component",
       "title": "Switch",
       "description": "Springy, draggable switch with async (optimistic/pessimistic) changes, shake-on-error, icons, custom color and native form support.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/switch/switch.tsx",
@@ -50,9 +46,7 @@
       "type": "registry:component",
       "title": "Copy Button",
       "description": "Icon morphs from copy to check with a blur-scale crossfade, then the check draws itself.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/copy-button/copy-button.tsx",
@@ -65,9 +59,7 @@
       "type": "registry:component",
       "title": "Animated Tabs",
       "description": "Segmented tabs with a pill that slides between items using a shared layout animation.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "src/registry/animated-tabs/animated-tabs.tsx",

@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Preview } from "@/components/site/preview";
-import { catalog } from "@/lib/catalog";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Preview } from '@/components/site/preview';
+import { catalog } from '@/lib/catalog';
 
-export const metadata: Metadata = { title: "Lab" };
+export const metadata: Metadata = { title: 'Lab' };
 
 export default function LabPage() {
   return (
@@ -12,9 +12,9 @@ export default function LabPage() {
         <h1 className="max-w-xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
           Small components, polished until they feel right.
         </h1>
-        <p className="mt-4 max-w-lg text-neutral-500 text-pretty">
-          Interaction experiments with React and Motion. Every piece respects reduced motion, works with the keyboard, and is
-          copy-paste ready.
+        <p className="mt-4 max-w-lg text-pretty text-neutral-500">
+          Interaction experiments with React and Motion. Every piece respects reduced motion, works
+          with the keyboard, and is copy-paste ready.
         </p>
       </section>
 

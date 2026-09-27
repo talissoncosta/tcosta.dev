@@ -1,12 +1,33 @@
-"use client";
+'use client';
 
-import { AnimatePresence, motion, type HTMLMotionProps, type PanInfo, type Transition } from "motion/react";
-import { useEffect, useRef, useState, type MouseEvent, type PointerEvent, type ReactNode } from "react";
+import {
+  AnimatePresence,
+  motion,
+  type HTMLMotionProps,
+  type PanInfo,
+  type Transition,
+} from 'motion/react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type PointerEvent,
+  type ReactNode,
+} from 'react';
 
 // Motion-driven and form props are owned by the component.
 type SwitchProps = Omit<
-  HTMLMotionProps<"button">,
-  "onChange" | "value" | "children" | "initial" | "animate" | "whileTap" | "variants" | "name" | "form"
+  HTMLMotionProps<'button'>,
+  | 'onChange'
+  | 'value'
+  | 'children'
+  | 'initial'
+  | 'animate'
+  | 'whileTap'
+  | 'variants'
+  | 'name'
+  | 'form'
 > & {
   checked?: boolean;
   defaultChecked?: boolean;
@@ -16,10 +37,10 @@ type SwitchProps = Omit<
    */
   onCheckedChange?: (checked: boolean) => void | Promise<unknown>;
   /** For async changes: "optimistic" moves the thumb right away, "pessimistic" waits. */
-  mode?: "optimistic" | "pessimistic";
+  mode?: 'optimistic' | 'pessimistic';
   /** External busy state (spinner + ignores input). Async handlers set this automatically. */
   loading?: boolean;
-  size?: "sm" | "md";
+  size?: 'sm' | 'md';
   /** Icons rendered inside the thumb, cross-faded on change. */
   icons?: { checked?: ReactNode; unchecked?: ReactNode };
   /** Form integration: submitted as `name=value` when on, like a checkbox. */
@@ -30,44 +51,45 @@ type SwitchProps = Omit<
 };
 
 const SIZES = {
-  sm: { track: "h-5 w-9", thumb: 16, stretched: 20, travel: 16 },
-  md: { track: "h-6 w-11", thumb: 20, stretched: 25, travel: 20 },
+  sm: { track: 'h-5 w-9', thumb: 16, stretched: 20, travel: 16 },
+  md: { track: 'h-6 w-11', thumb: 20, stretched: 25, travel: 20 },
 } as const;
 
 // A little overshoot so the thumb "lands" instead of stopping dead.
-const thumbTransition: Transition = { type: "spring", duration: 0.35, bounce: 0.3 };
-const fade: Transition = { type: "spring", duration: 0.25, bounce: 0 };
+const thumbTransition: Transition = { type: 'spring', duration: 0.35, bounce: 0.3 };
+const fade: Transition = { type: 'spring', duration: 0.25, bounce: 0 };
 
 const trackVariants = {
   idle: { x: 0 },
-  error: { x: [0, -5, 5, -3, 3, 0], transition: { duration: 0.4, ease: "easeInOut" as const } },
+  error: { x: [0, -5, 5, -3, 3, 0], transition: { duration: 0.4, ease: 'easeInOut' as const } },
 };
 
 const iconVariants = {
-  hidden: { opacity: 0, scale: 0.4, filter: "blur(2px)" },
-  visible: { opacity: 1, scale: 1, filter: "blur(0px)" },
+  hidden: { opacity: 0, scale: 0.4, filter: 'blur(2px)' },
+  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
 };
 
 // Colors are overridable with --switch-on / --switch-thumb (set them via style or a parent class).
 const TRACK = [
-  "group inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5",
-  "transition-[background-color,box-shadow] duration-200 ease-out",
-  "bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600",
-  "data-[state=checked]:bg-[var(--switch-on,var(--color-neutral-900))]",
-  "dark:data-[state=checked]:bg-[var(--switch-on,var(--color-neutral-100))]",
-  "data-[error]:ring-2 data-[error]:ring-red-500/60",
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:focus-visible:outline-neutral-100",
-  "disabled:cursor-not-allowed disabled:opacity-50 aria-busy:cursor-progress",
-].join(" ");
+  'group inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5',
+  'transition-[background-color,box-shadow] duration-200 ease-out',
+  'bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600',
+  'data-[state=checked]:bg-[var(--switch-on,var(--color-neutral-900))]',
+  'dark:data-[state=checked]:bg-[var(--switch-on,var(--color-neutral-100))]',
+  'data-[error]:ring-2 data-[error]:ring-red-500/60',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:focus-visible:outline-neutral-100',
+  'disabled:cursor-not-allowed disabled:opacity-50 aria-busy:cursor-progress',
+].join(' ');
 
 const THUMB = [
-  "flex items-center justify-center rounded-full shadow-[0_1px_3px_rgb(0_0_0/0.2)]",
-  "bg-[var(--switch-thumb,white)] dark:group-data-[state=checked]:bg-[var(--switch-thumb,var(--color-neutral-900))]",
-  "text-neutral-400 group-data-[state=checked]:text-[var(--switch-on,var(--color-neutral-900))]",
-  "dark:group-data-[state=checked]:text-[var(--switch-on,var(--color-neutral-100))]",
-].join(" ");
+  'flex items-center justify-center rounded-full shadow-[0_1px_3px_rgb(0_0_0/0.2)]',
+  'bg-[var(--switch-thumb,white)] dark:group-data-[state=checked]:bg-[var(--switch-thumb,var(--color-neutral-900))]',
+  'text-neutral-400 group-data-[state=checked]:text-[var(--switch-on,var(--color-neutral-900))]',
+  'dark:group-data-[state=checked]:text-[var(--switch-on,var(--color-neutral-100))]',
+].join(' ');
 
-const isPromise = (v: unknown): v is Promise<unknown> => typeof (v as Promise<unknown>)?.then === "function";
+const isPromise = (v: unknown): v is Promise<unknown> =>
+  typeof (v as Promise<unknown>)?.then === 'function';
 
 /**
  * Switch with a springy, draggable thumb that stretches while pressed.
@@ -78,16 +100,16 @@ export function Switch({
   checked: checkedProp,
   defaultChecked = false,
   onCheckedChange,
-  mode = "optimistic",
+  mode = 'optimistic',
   loading = false,
-  size = "md",
+  size = 'md',
   icons,
   name,
-  value = "on",
+  value = 'on',
   required,
   form,
   disabled,
-  className = "",
+  className = '',
   onClick,
   onPointerDown,
   ...props
@@ -99,7 +121,7 @@ export function Switch({
   const input = useRef<HTMLInputElement>(null);
 
   const committed = checkedProp ?? uncontrolled;
-  const checked = mode === "optimistic" && pending !== null ? pending : committed;
+  const checked = mode === 'optimistic' && pending !== null ? pending : committed;
   const busy = loading || pending !== null;
   const { track, thumb, stretched, travel } = SIZES[size];
 
@@ -115,8 +137,8 @@ export function Switch({
     const el = input.current?.form;
     if (!el || checkedProp !== undefined) return;
     const onReset = () => setUncontrolled(defaultChecked);
-    el.addEventListener("reset", onReset);
-    return () => el.removeEventListener("reset", onReset);
+    el.addEventListener('reset', onReset);
+    return () => el.removeEventListener('reset', onReset);
   }, [checkedProp, defaultChecked]);
 
   const change = async (next: boolean) => {
@@ -165,15 +187,15 @@ export function Switch({
         aria-checked={checked}
         aria-busy={busy || undefined}
         disabled={disabled}
-        data-state={checked ? "checked" : "unchecked"}
+        data-state={checked ? 'checked' : 'unchecked'}
         data-error={error || undefined}
         initial={false}
         variants={trackVariants}
-        animate={error ? "error" : "idle"}
-        whileTap={busy ? undefined : "pressed"}
+        animate={error ? 'error' : 'idle'}
+        whileTap={busy ? undefined : 'pressed'}
         onClick={handleClick}
         onPointerDown={handlePointerDown}
-        className={`${TRACK} ${checked ? "justify-end" : "justify-start"} ${track} ${className}`}
+        className={`${TRACK} ${checked ? 'justify-end' : 'justify-start'} ${track} ${className}`}
         {...props}
       >
         <motion.span
@@ -181,7 +203,7 @@ export function Switch({
           transition={thumbTransition}
           variants={{ idle: { width: thumb }, pressed: { width: stretched } }}
           style={{ height: thumb }}
-          drag={busy || disabled ? false : "x"}
+          drag={busy || disabled ? false : 'x'}
           dragConstraints={checked ? { left: -travel, right: 0 } : { left: 0, right: travel }}
           dragElastic={0.08}
           dragMomentum={false}
@@ -192,12 +214,20 @@ export function Switch({
         >
           <AnimatePresence mode="popLayout" initial={false}>
             {busy ? (
-              <motion.span key="spinner" variants={iconVariants} initial="hidden" animate="visible" exit="hidden" transition={fade} className="flex">
+              <motion.span
+                key="spinner"
+                variants={iconVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                transition={fade}
+                className="flex"
+              >
                 <Spinner size={thumb - 8} />
               </motion.span>
             ) : icon ? (
               <motion.span
-                key={checked ? "on" : "off"}
+                key={checked ? 'on' : 'off'}
                 variants={iconVariants}
                 initial="hidden"
                 animate="visible"
@@ -237,7 +267,14 @@ export function Switch({
 
 function Spinner({ size }: { size: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className="animate-spin" aria-hidden>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className="animate-spin"
+      aria-hidden
+    >
       <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.25" strokeWidth="3" />
       <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
     </svg>

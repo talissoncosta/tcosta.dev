@@ -1,9 +1,9 @@
-import type { ComponentType } from "react";
-import AnimatedTabsDemo from "@/demos/animated-tabs-demo";
-import CopyButtonDemo from "@/demos/copy-button-demo";
-import SwitchCssDemo from "@/demos/switch-css-demo";
-import SwitchDemo from "@/demos/switch-demo";
-import ToastDemo from "@/demos/toast-demo";
+import type { ComponentType } from 'react';
+import AnimatedTabsDemo from '@/demos/animated-tabs-demo';
+import CopyButtonDemo from '@/demos/copy-button-demo';
+import SwitchCssDemo from '@/demos/switch-css-demo';
+import SwitchDemo from '@/demos/switch-demo';
+import ToastDemo from '@/demos/toast-demo';
 
 export type CatalogEntry = {
   slug: string;
@@ -26,49 +26,69 @@ export type CatalogEntry = {
  */
 export const catalog: CatalogEntry[] = [
   {
-    slug: "toast",
-    title: "Toast",
-    description: "Stacked toasts that fan out on hover, swipe to dismiss, pause while you read, and morph from loading to done.",
-    techniques: ["AnimatePresence", "drag", "useAnimate", "useSyncExternalStore", "ResizeObserver", "aria-live"],
-    addedAt: "2026-09-29",
+    slug: 'toast',
+    title: 'Toast',
+    description:
+      'Stacked toasts that fan out on hover, swipe to dismiss, pause while you read, and morph from loading to done.',
+    techniques: [
+      'AnimatePresence',
+      'drag',
+      'useAnimate',
+      'useSyncExternalStore',
+      'ResizeObserver',
+      'aria-live',
+    ],
+    addedAt: '2026-09-29',
     Demo: ToastDemo,
-    files: ["toast/toast.tsx"],
+    files: ['toast/toast.tsx'],
   },
   {
-    slug: "switch",
-    title: "Switch",
-    description: "Springy, draggable thumb that stretches while pressed. Async (optimistic or pessimistic) with shake-on-error, icons, custom color and native form support.",
-    techniques: ["layout", "drag", "whileTap variants", "keyframes", "AnimatePresence popLayout", "a11y: switch role", "forms"],
-    addedAt: "2026-09-28",
+    slug: 'switch',
+    title: 'Switch',
+    description:
+      'Springy, draggable thumb that stretches while pressed. Async (optimistic or pessimistic) with shake-on-error, icons, custom color and native form support.',
+    techniques: [
+      'layout',
+      'drag',
+      'whileTap variants',
+      'keyframes',
+      'AnimatePresence popLayout',
+      'a11y: switch role',
+      'forms',
+    ],
+    addedAt: '2026-09-28',
     Demo: SwitchDemo,
-    files: ["switch/switch.tsx"],
+    files: ['switch/switch.tsx'],
   },
   {
-    slug: "switch-css",
-    title: "Switch (CSS-only)",
-    description: "The same switch with zero JS animation. Mash it next to the Motion version to feel spring vs bezier.",
-    techniques: ["CSS transitions", "overshoot bezier", "group-active", "spring vs bezier"],
-    addedAt: "2026-09-28",
+    slug: 'switch-css',
+    title: 'Switch (CSS-only)',
+    description:
+      'The same switch with zero JS animation. Mash it next to the Motion version to feel spring vs bezier.',
+    techniques: ['CSS transitions', 'overshoot bezier', 'group-active', 'spring vs bezier'],
+    addedAt: '2026-09-28',
     Demo: SwitchCssDemo,
-    files: ["switch-css/switch-css.tsx"],
+    files: ['switch-css/switch-css.tsx'],
   },
   {
-    slug: "copy-button",
-    title: "Copy Button",
-    description: "Icon morphs from copy to check with a blur-scale crossfade, then the check draws itself.",
-    techniques: ["AnimatePresence popLayout", "spring", "pathLength", "blur"],
-    addedAt: "2026-09-27",
+    slug: 'copy-button',
+    title: 'Copy Button',
+    description:
+      'Icon morphs from copy to check with a blur-scale crossfade, then the check draws itself.',
+    techniques: ['AnimatePresence popLayout', 'spring', 'pathLength', 'blur'],
+    addedAt: '2026-09-27',
     Demo: CopyButtonDemo,
-    files: ["copy-button/copy-button.tsx"],
+    files: ['copy-button/copy-button.tsx'],
   },
   {
-    slug: "animated-tabs",
-    title: "Animated Tabs",
-    description: "Segmented tabs with a pill that slides between items using a shared layout animation.",
-    techniques: ["layoutId", "spring", "a11y: tabs pattern"],
-    addedAt: "2026-09-27",
+    slug: 'animated-tabs',
+    title: 'Animated Tabs',
+    description:
+      'Segmented tabs with a pill that slides between items using a shared layout animation.',
+    techniques: ['layoutId', 'spring', 'a11y: tabs pattern'],
+    addedAt: '2026-09-27',
     Demo: AnimatedTabsDemo,
-    files: ["animated-tabs/animated-tabs.tsx"],
+    files: ['animated-tabs/animated-tabs.tsx'],
   },
 ].sort((a, b) => b.addedAt.localeCompare(a.addedAt));
 

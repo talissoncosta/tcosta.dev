@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { AnimatePresence, motion, useAnimate, type PanInfo, type Transition } from "motion/react";
+import { AnimatePresence, motion, useAnimate, type PanInfo, type Transition } from 'motion/react';
 import {
   useCallback,
   useEffect,
@@ -10,13 +10,13 @@ import {
   useSyncExternalStore,
   type FocusEvent,
   type ReactNode,
-} from "react";
+} from 'react';
 
 /* -------------------------------------------------------------------------------------------------
  * Store — a tiny module-level store so `toast()` can be called from anywhere, no provider needed.
  * -----------------------------------------------------------------------------------------------*/
 
-export type ToastType = "default" | "success" | "error" | "loading";
+export type ToastType = 'default' | 'success' | 'error' | 'loading';
 
 export type ToastOptions = {
   description?: ReactNode;
@@ -59,23 +59,30 @@ function dismiss(id?: number) {
 
 type Message<T> = ReactNode | ((value: T) => ReactNode);
 const resolve = <T,>(message: Message<T>, value: T) =>
-  typeof message === "function" ? (message as (v: T) => ReactNode)(value) : message;
+  typeof message === 'function' ? (message as (v: T) => ReactNode)(value) : message;
 
-export const toast = Object.assign((title: ReactNode, options?: ToastOptions) => create("default", title, options), {
-  success: (title: ReactNode, options?: ToastOptions) => create("success", title, options),
-  error: (title: ReactNode, options?: ToastOptions) => create("error", title, options),
-  /** Shows a loading toast that turns into success/error when the promise settles. */
-  promise<T>(promise: Promise<T>, messages: { loading: ReactNode; success: Message<T>; error: Message<unknown> }, options?: ToastOptions) {
-    const id = create("loading", messages.loading, { ...options, duration: Infinity });
-    const duration = options?.duration ?? DEFAULT_DURATION;
-    promise.then(
-      (data) => update(id, { type: "success", title: resolve(messages.success, data), duration }),
-      (error) => update(id, { type: "error", title: resolve(messages.error, error), duration }),
-    );
-    return promise;
+export const toast = Object.assign(
+  (title: ReactNode, options?: ToastOptions) => create('default', title, options),
+  {
+    success: (title: ReactNode, options?: ToastOptions) => create('success', title, options),
+    error: (title: ReactNode, options?: ToastOptions) => create('error', title, options),
+    /** Shows a loading toast that turns into success/error when the promise settles. */
+    promise<T>(
+      promise: Promise<T>,
+      messages: { loading: ReactNode; success: Message<T>; error: Message<unknown> },
+      options?: ToastOptions,
+    ) {
+      const id = create('loading', messages.loading, { ...options, duration: Infinity });
+      const duration = options?.duration ?? DEFAULT_DURATION;
+      promise.then(
+        (data) => update(id, { type: 'success', title: resolve(messages.success, data), duration }),
+        (error) => update(id, { type: 'error', title: resolve(messages.error, error), duration }),
+      );
+      return promise;
+    },
+    dismiss,
   },
-  dismiss,
-});
+);
 
 /* -------------------------------------------------------------------------------------------------
  * Toaster
@@ -86,11 +93,15 @@ const PEEK = 10; // how much each toast behind peeks out when collapsed
 const SCALE_STEP = 0.05;
 
 // Low bounce: the stack should settle, not wobble.
-const stackTransition: Transition = { type: "spring", duration: 0.45, bounce: 0.12 };
-const swapTransition: Transition = { type: "spring", duration: 0.3, bounce: 0 };
+const stackTransition: Transition = { type: 'spring', duration: 0.45, bounce: 0.12 };
+const swapTransition: Transition = { type: 'spring', duration: 0.3, bounce: 0 };
 
 export function Toaster({ visibleToasts = 3 }: { visibleToasts?: number }) {
-  const items = useSyncExternalStore(subscribe, () => toasts, () => EMPTY);
+  const items = useSyncExternalStore(
+    subscribe,
+    () => toasts,
+    () => EMPTY,
+  );
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [pageHidden, setPageHidden] = useState(false);
@@ -98,8 +109,8 @@ export function Toaster({ visibleToasts = 3 }: { visibleToasts?: number }) {
 
   useEffect(() => {
     const onVisibility = () => setPageHidden(document.hidden);
-    document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
   }, []);
 
   const onHeight = useCallback((id: number, height: number) => {
@@ -112,7 +123,9 @@ export function Toaster({ visibleToasts = 3 }: { visibleToasts?: number }) {
   const frontHeight = shown[0] ? heightOf(shown[0]) : 0;
 
   // Expanded offset of each toast = heights of the newer toasts in front of it + gaps.
-  const offsets = items.map((_, i) => shown.slice(0, i).reduce((sum, t) => sum + heightOf(t) + GAP, 0));
+  const offsets = items.map((_, i) =>
+    shown.slice(0, i).reduce((sum, t) => sum + heightOf(t) + GAP, 0),
+  );
   const stackHeight = expanded
     ? shown.reduce((sum, t) => sum + heightOf(t), 0) + GAP * Math.max(shown.length - 1, 0)
     : frontHeight + PEEK * Math.max(shown.length - 1, 0);
@@ -122,7 +135,10 @@ export function Toaster({ visibleToasts = 3 }: { visibleToasts?: number }) {
   };
 
   return (
-    <section aria-label="Notifications" className="pointer-events-none fixed right-4 bottom-4 z-50 w-[min(356px,calc(100vw-2rem))]">
+    <section
+      aria-label="Notifications"
+      className="pointer-events-none fixed right-4 bottom-4 z-50 w-[min(356px,calc(100vw-2rem))]"
+    >
       <motion.ol
         aria-live="polite"
         initial={false}
@@ -170,7 +186,17 @@ type ToastItemProps = {
   onHeight: (id: number, height: number) => void;
 };
 
-function ToastItem({ toast: t, index, total, inStack, expanded, y, height, paused, onHeight }: ToastItemProps) {
+function ToastItem({
+  toast: t,
+  index,
+  total,
+  inStack,
+  expanded,
+  y,
+  height,
+  paused,
+  onHeight,
+}: ToastItemProps) {
   const content = useRef<HTMLDivElement>(null);
   const [scope, animate] = useAnimate<HTMLLIElement>();
   const duration = t.duration ?? DEFAULT_DURATION;
@@ -205,7 +231,7 @@ function ToastItem({ toast: t, index, total, inStack, expanded, y, height, pause
 
   const onDragEnd = async (_: unknown, info: PanInfo) => {
     if (info.offset.x < 80 && info.velocity.x < 400) return; // not far/fast enough: springs back
-    await animate(scope.current, { x: 420, opacity: 0 }, { duration: 0.18, ease: "easeOut" });
+    await animate(scope.current, { x: 420, opacity: 0 }, { duration: 0.18, ease: 'easeOut' });
     dismiss(t.id);
   };
 
@@ -219,18 +245,18 @@ function ToastItem({ toast: t, index, total, inStack, expanded, y, height, pause
         opacity: inStack ? 1 : 0,
         y,
         scale: expanded ? 1 : 1 - index * SCALE_STEP,
-        height: height ?? "auto",
+        height: height ?? 'auto',
       }}
-      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15, ease: "easeIn" } }}
+      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15, ease: 'easeIn' } }}
       transition={stackTransition}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={{ left: 0.04, right: 0.8 }}
       onDragEnd={onDragEnd}
-      onKeyDown={(e) => e.key === "Escape" && dismiss(t.id)}
-      style={{ zIndex: total - index, transformOrigin: "top center" }}
+      onKeyDown={(e) => e.key === 'Escape' && dismiss(t.id)}
+      style={{ zIndex: total - index, transformOrigin: 'top center' }}
       className={`group absolute inset-x-0 bottom-0 cursor-grab touch-pan-y overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_4px_16px_rgb(0_0_0/0.08)] outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 active:cursor-grabbing dark:border-neutral-800 dark:bg-neutral-900 dark:focus-visible:ring-neutral-100 ${
-        inStack ? "" : "pointer-events-none"
+        inStack ? '' : 'pointer-events-none'
       }`}
     >
       {/* Content of toasts behind the front one fades out so only their edge peeks. */}
@@ -245,9 +271,9 @@ function ToastItem({ toast: t, index, total, inStack, expanded, y, height, pause
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={t.type}
-              initial={{ opacity: 0, scale: 0.5, filter: "blur(3px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.5, filter: "blur(3px)" }}
+              initial={{ opacity: 0, scale: 0.5, filter: 'blur(3px)' }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 0.5, filter: 'blur(3px)' }}
               transition={swapTransition}
               className="flex"
             >
@@ -269,7 +295,9 @@ function ToastItem({ toast: t, index, total, inStack, expanded, y, height, pause
               {t.title}
             </motion.p>
           </AnimatePresence>
-          {t.description && <p className="mt-0.5 text-sm text-neutral-500 dark:text-neutral-400">{t.description}</p>}
+          {t.description && (
+            <p className="mt-0.5 text-sm text-neutral-500 dark:text-neutral-400">{t.description}</p>
+          )}
         </div>
 
         {t.action && (
@@ -291,7 +319,16 @@ function ToastItem({ toast: t, index, total, inStack, expanded, y, height, pause
           onClick={() => dismiss(t.id)}
           className="-mt-1 -mr-1 flex size-6 shrink-0 items-center justify-center rounded-md text-neutral-400 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 hover:bg-neutral-100 hover:text-neutral-700 focus-visible:opacity-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            aria-hidden
+          >
             <path d="M18 6 6 18M6 6l12 12" />
           </svg>
         </button>
@@ -301,23 +338,42 @@ function ToastItem({ toast: t, index, total, inStack, expanded, y, height, pause
 }
 
 function Icon({ type }: { type: ToastType }) {
-  if (type === "loading") {
+  if (type === 'loading') {
     return (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="animate-spin text-neutral-400" aria-hidden>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        className="animate-spin text-neutral-400"
+        aria-hidden
+      >
         <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.25" strokeWidth="3" />
-        <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+        <path
+          d="M21 12a9 9 0 0 0-9-9"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
-  if (type === "success") {
+  if (type === 'success') {
     return (
       <svg width="16" height="16" viewBox="0 0 24 24" className="text-emerald-500" aria-hidden>
         <circle cx="12" cy="12" r="10" fill="currentColor" />
-        <path d="m8 12.5 2.5 2.5L16 9.5" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="m8 12.5 2.5 2.5L16 9.5"
+          fill="none"
+          stroke="white"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     );
   }
-  if (type === "error") {
+  if (type === 'error') {
     return (
       <svg width="16" height="16" viewBox="0 0 24 24" className="text-red-500" aria-hidden>
         <circle cx="12" cy="12" r="10" fill="currentColor" />

@@ -1,17 +1,17 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { codeToHtml } from "shiki";
-import { CopyButton } from "@/registry/copy-button/copy-button";
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { codeToHtml } from 'shiki';
+import { CopyButton } from '@/registry/copy-button/copy-button';
 
 /**
  * Server component: reads a registry source file at build time and renders it highlighted.
  * `file` is relative to src/registry (the path is scoped so the build only traces that folder).
  */
 export async function CodeBlock({ file }: { file: string }) {
-  const source = await readFile(path.join(process.cwd(), "src", "registry", file), "utf8");
+  const source = await readFile(path.join(process.cwd(), 'src', 'registry', file), 'utf8');
   const html = await codeToHtml(source, {
-    lang: "tsx",
-    themes: { light: "github-light", dark: "github-dark-dimmed" },
+    lang: 'tsx',
+    themes: { light: 'github-light', dark: 'github-dark-dimmed' },
     defaultColor: false,
   });
 
