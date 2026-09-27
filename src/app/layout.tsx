@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { Providers } from "@/components/site/providers";
+import { SiteNav } from "@/components/site/site-nav";
 import "./globals.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
-  title: { default: "UI Lab", template: "%s · UI Lab" },
-  description: "Small, fluid, animated React components — built in public.",
+  metadataBase: new URL("https://tcosta.dev"),
+  title: { default: "Talisson Costa — Frontend Design Engineer", template: "%s · Talisson Costa" },
+  description: "Frontend design engineer. Small, fluid, animated React components — built in public.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -18,11 +20,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-dvh bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
         <Providers>
           <div className="mx-auto max-w-5xl px-5 sm:px-8">
-            <header className="flex items-center justify-between py-6">
+            <header className="flex items-center justify-between gap-4 py-6">
               <Link href="/" className="font-semibold tracking-tight">
-                UI Lab
+                Talisson Costa
               </Link>
-              <span className="text-sm text-neutral-500">fluid components, built in public</span>
+              <SiteNav />
             </header>
             <main className="pb-24">{children}</main>
           </div>
