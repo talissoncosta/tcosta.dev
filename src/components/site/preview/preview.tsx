@@ -14,7 +14,7 @@ const stageVariants = cva('flex items-center justify-center p-8', {
   variants: {
     size: {
       default: 'min-h-80',
-      compact: 'min-h-48',
+      compact: 'min-h-56',
     },
   },
   defaultVariants: {
