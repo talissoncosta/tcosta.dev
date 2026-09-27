@@ -1,7 +1,9 @@
 import type { ComponentType } from 'react';
 import AnimatedTabsDemo from '@/demos/animated-tabs-demo';
+import ButtonDemo from '@/demos/button-demo';
 import CopyButtonDemo from '@/demos/copy-button-demo';
 import DropdownMenuDemo from '@/demos/dropdown-menu-demo';
+import IconButtonDemo from '@/demos/icon-button-demo';
 import SwitchCssDemo from '@/demos/switch-css-demo';
 import SwitchDemo from '@/demos/switch-demo';
 import ThemeToggleDemo from '@/demos/theme-toggle-demo';
@@ -27,6 +29,35 @@ export type CatalogEntry = {
  * 3. an entry here + an item in registry.json
  */
 export const catalog: CatalogEntry[] = [
+  {
+    slug: 'button',
+    title: 'Button',
+    description:
+      'Five variants, three sizes, a press that gives, and a loading state that keeps the width.',
+    techniques: ['cva', 'active:scale', 'aria-busy', 'CSS-only transitions'],
+    addedAt: '2026-09-27',
+    Demo: ButtonDemo,
+    files: [
+      'button/button.tsx',
+      'button/button-variants.ts',
+      'button/spinner.tsx',
+      'button/index.ts',
+    ],
+  },
+  {
+    slug: 'icon-button',
+    title: 'Icon Button',
+    description:
+      "Square button for a single icon. Its accessible name is required by the type, so it can't ship unlabeled.",
+    techniques: ['required label (types)', 'cva', 'builds on Button'],
+    addedAt: '2026-09-27',
+    Demo: IconButtonDemo,
+    files: [
+      'icon-button/icon-button.tsx',
+      'icon-button/icon-button-variants.ts',
+      'icon-button/index.ts',
+    ],
+  },
   {
     slug: 'dropdown-menu',
     title: 'Dropdown Menu',
