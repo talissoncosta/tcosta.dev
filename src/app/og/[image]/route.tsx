@@ -15,6 +15,11 @@ const cards: Record<string, Parameters<typeof ogImage>[0]> = {
     title: 'Small components, polished until they feel right.',
     url: 'tcosta.dev/lab',
   },
+  'work-with-me': {
+    eyebrow: 'Talisson Costa',
+    title: 'Design systems that people and AI agents follow.',
+    url: 'tcosta.dev/work-with-me',
+  },
   writing: {
     eyebrow: 'Talisson Costa · Writing',
     title: 'Notes on component APIs and design systems.',
