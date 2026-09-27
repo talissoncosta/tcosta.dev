@@ -27,28 +27,29 @@ function resendFetch(env: Env, path: string, body?: unknown) {
 
 // Create the contact in the segment. Resend doesn't document duplicates, so if creating fails
 // (e.g. the email is already a contact), add the existing contact to the segment instead.
-async function subscribe(env: Env, email: string) {
+async function subscribe(env: Env, email: string): Promise<string | null> {
   const segment = env.RESEND_WAITLIST_SEGMENT_ID!;
   const created = await resendFetch(env, '/contacts', {
     email,
     unsubscribed: false,
     segments: [{ id: segment }],
   });
-  if (created.ok) return true;
-  if (created.status === 429) return false;
+  if (created.ok) return null;
+  if (created.status === 429) return 'resend_429';
 
   const added = await resendFetch(
     env,
     `/contacts/${encodeURIComponent(email)}/segments/${encodeURIComponent(segment)}`,
   );
-  return added.ok;
+  return added.ok ? null : `resend_${created.status}_${added.status}`;
 }
 
-function reply(request: Request, status: 'joined' | 'invalid' | 'error') {
+// `reason` is a short failure code (never a secret), to debug config issues from the response.
+function reply(request: Request, status: 'joined' | 'invalid' | 'error', reason?: string) {
   const wantsJson = request.headers.get('Accept')?.includes('application/json');
   if (wantsJson) {
     return Response.json(
-      { status },
+      { status, ...(reason && { reason }) },
       { status: status === 'joined' ? 200 : status === 'invalid' ? 400 : 502 },
     );
   }
@@ -59,7 +60,8 @@ function reply(request: Request, status: 'joined' | 'invalid' | 'error') {
 }
 
 export async function onRequestPost({ request, env }: Context) {
-  if (!env.RESEND_API_KEY || !env.RESEND_WAITLIST_SEGMENT_ID) return reply(request, 'error');
+  if (!env.RESEND_API_KEY) return reply(request, 'error', 'missing_api_key');
+  if (!env.RESEND_WAITLIST_SEGMENT_ID) return reply(request, 'error', 'missing_segment_id');
 
   const form = await request.formData().catch(() => null);
   const email = String(form?.get('email') ?? '')
@@ -71,6 +73,6 @@ export async function onRequestPost({ request, env }: Context) {
   if (honeypot) return reply(request, 'joined');
   if (email.length > 254 || !EMAIL.test(email)) return reply(request, 'invalid');
 
-  const ok = await subscribe(env, email).catch(() => false);
-  return reply(request, ok ? 'joined' : 'error');
+  const failure = await subscribe(env, email).catch(() => 'network');
+  return failure ? reply(request, 'error', failure) : reply(request, 'joined');
 }
