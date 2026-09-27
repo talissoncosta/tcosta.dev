@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Container } from '@/components/site/container';
 import { DemoCard } from '@/components/site/demo-card';
 import { PageHeader } from '@/components/site/page-header';
+import { ProWaitlist } from '@/components/site/pro-waitlist';
 import { catalog } from '@/lib/catalog';
 import { pageMetadata } from '@/lib/metadata';
 
@@ -29,6 +30,7 @@ export default function LabPage() {
           </li>
         ))}
       </ul>
+      <ProWaitlist className="mt-20" />
     </Container>
   );
 }
