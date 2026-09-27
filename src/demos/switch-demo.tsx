@@ -1,23 +1,23 @@
 'use client';
 
 import { useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
-import { Switch } from '@/registry/switch/switch';
+import { cn } from '@/lib/utils';
+import { Switch } from '@/registry/switch';
 
-const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function SwitchDemo() {
   const [beta, setBeta] = useState(false);
-  const [sync] = useState(false);
   const [syncError, setSyncError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState<string | null>(null);
 
-  // Optimistic: thumb moves at once; state is committed before the promise resolves.
+  // Optimistic: the thumb moves at once; state is committed before the promise resolves.
   const saveBeta = async (next: boolean) => {
     await wait(900);
     setBeta(next);
   };
 
-  // Pessimistic + always fails: spinner, then shake and revert.
+  // Pessimistic and always failing: spinner, then shake and revert.
   const saveSync = async () => {
     setSyncError(null);
     await wait(900);
@@ -25,15 +25,14 @@ export default function SwitchDemo() {
     throw new Error('offline');
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    setSubmitted(JSON.stringify(Object.fromEntries(data)));
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitted(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget))));
   };
 
   return (
     <div className="flex w-full max-w-md flex-col gap-4">
-      <div className="divide-y divide-neutral-100 rounded-xl border border-neutral-200 bg-white shadow-xs dark:divide-neutral-800 dark:border-neutral-800 dark:bg-neutral-950">
+      <div className="divide-y rounded-xl border bg-card shadow-xs">
         <Row
           id="sw-notifications"
           title="Notifications"
@@ -43,7 +42,7 @@ export default function SwitchDemo() {
             id="sw-notifications"
             aria-describedby="sw-notifications-desc"
             defaultChecked
-            icons={{ checked: <Check />, unchecked: <Cross /> }}
+            icons={{ checked: <CheckIcon />, unchecked: <CrossIcon /> }}
           />
         </Row>
         <Row
@@ -62,13 +61,13 @@ export default function SwitchDemo() {
           id="sw-sync"
           title="Cloud sync"
           description={syncError ?? 'Async, pessimistic — and the server always fails.'}
-          tone={syncError ? 'error' : undefined}
+          isError={syncError !== null}
         >
           <Switch
             id="sw-sync"
             aria-describedby="sw-sync-desc"
             mode="pessimistic"
-            checked={sync}
+            checked={false}
             onCheckedChange={saveSync}
           />
         </Row>
@@ -88,34 +87,28 @@ export default function SwitchDemo() {
       <form
         onSubmit={onSubmit}
         onReset={() => setSubmitted(null)}
-        className="flex flex-col gap-3 rounded-xl border border-neutral-200 bg-white p-4 shadow-xs dark:border-neutral-800 dark:bg-neutral-950"
+        className="flex flex-col gap-3 rounded-xl border bg-card p-4 shadow-xs"
       >
-        <div className="flex items-center justify-between gap-6">
-          <label htmlFor="sw-terms" className="text-sm font-medium">
-            I accept the terms <span className="text-red-500">*</span>
-          </label>
+        <Field id="sw-terms" label="I accept the terms" isRequired>
           <Switch id="sw-terms" name="terms" value="accepted" required />
-        </div>
-        <div className="flex items-center justify-between gap-6">
-          <label htmlFor="sw-newsletter" className="text-sm font-medium">
-            Newsletter
-          </label>
+        </Field>
+        <Field id="sw-newsletter" label="Newsletter">
           <Switch id="sw-newsletter" name="newsletter" size="sm" />
-        </div>
+        </Field>
         <div className="flex items-center justify-between gap-3 pt-1">
-          <code className="truncate font-mono text-xs text-neutral-500">
+          <code className="truncate font-mono text-xs text-muted-foreground">
             {submitted ?? 'Native form: submit / reset'}
           </code>
           <div className="flex shrink-0 gap-2">
-            <button
-              type="reset"
-              className="rounded-md px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
-            >
+            <button type="reset" className={cn(buttonClassName, 'hover:bg-accent')}>
               Reset
             </button>
             <button
               type="submit"
-              className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300"
+              className={cn(
+                buttonClassName,
+                'bg-primary font-medium text-primary-foreground hover:bg-primary/90',
+              )}
             >
               Submit
             </button>
@@ -126,33 +119,55 @@ export default function SwitchDemo() {
   );
 }
 
-function Row(props: {
+const buttonClassName = 'rounded-md px-3 py-1.5 text-sm transition-colors';
+
+type RowProps = {
   id: string;
   title: string;
   description: string;
-  tone?: 'error';
+  isError?: boolean;
   children: ReactNode;
-}) {
+};
+
+function Row({ id, title, description, isError = false, children }: RowProps) {
   return (
     <div className="flex items-center justify-between gap-6 px-4 py-3">
       <div className="min-w-0">
-        <label htmlFor={props.id} className="text-sm font-medium">
-          {props.title}
+        <label htmlFor={id} className="text-sm font-medium">
+          {title}
         </label>
         <p
-          id={`${props.id}-desc`}
+          id={`${id}-desc`}
           aria-live="polite"
-          className={`text-xs ${props.tone === 'error' ? 'text-red-600 dark:text-red-400' : 'text-neutral-500'}`}
+          className={cn('text-xs text-muted-foreground', isError && 'text-destructive')}
         >
-          {props.description}
+          {description}
         </p>
       </div>
-      {props.children}
+      {children}
     </div>
   );
 }
 
-function Check() {
+type FieldProps = {
+  id: string;
+  label: string;
+  isRequired?: boolean;
+  children: ReactNode;
+};
+
+function Field({ id, label, isRequired = false, children }: FieldProps) {
+  return (
+    <div className="flex items-center justify-between gap-6">
+      <label htmlFor={id} className="text-sm font-medium">
+        {label} {isRequired && <span className="text-destructive">*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function CheckIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -168,7 +183,7 @@ function Check() {
   );
 }
 
-function Cross() {
+function CrossIcon() {
   return (
     <svg
       viewBox="0 0 24 24"

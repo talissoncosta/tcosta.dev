@@ -58,7 +58,16 @@ export const catalog: CatalogEntry[] = [
     ],
     addedAt: '2026-09-28',
     Demo: SwitchDemo,
-    files: ['switch/switch.tsx'],
+    files: [
+      'switch/switch.tsx',
+      'switch/use-switch-state.ts',
+      'switch/use-thumb-drag.ts',
+      'switch/switch-thumb.tsx',
+      'switch/switch-input.tsx',
+      'switch/variants.ts',
+      'switch/spinner.tsx',
+      'switch/index.ts',
+    ],
   },
   {
     slug: 'switch-css',

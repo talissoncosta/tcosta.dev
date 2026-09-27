@@ -21,13 +21,50 @@
       "type": "registry:component",
       "title": "Switch",
       "description": "Springy, draggable switch with async (optimistic/pessimistic) changes, shake-on-error, icons, custom color and native form support.",
-      "dependencies": ["motion"],
+      "dependencies": ["motion", "class-variance-authority"],
       "files": [
         {
+          "path": "src/registry/switch/index.ts",
+          "type": "registry:component",
+          "target": "components/switch/index.ts"
+        },
+        {
           "path": "src/registry/switch/switch.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/switch/switch.tsx"
+        },
+        {
+          "path": "src/registry/switch/switch-thumb.tsx",
+          "type": "registry:component",
+          "target": "components/switch/switch-thumb.tsx"
+        },
+        {
+          "path": "src/registry/switch/switch-input.tsx",
+          "type": "registry:component",
+          "target": "components/switch/switch-input.tsx"
+        },
+        {
+          "path": "src/registry/switch/use-switch-state.ts",
+          "type": "registry:component",
+          "target": "components/switch/use-switch-state.ts"
+        },
+        {
+          "path": "src/registry/switch/use-thumb-drag.ts",
+          "type": "registry:component",
+          "target": "components/switch/use-thumb-drag.ts"
+        },
+        {
+          "path": "src/registry/switch/variants.ts",
+          "type": "registry:component",
+          "target": "components/switch/variants.ts"
+        },
+        {
+          "path": "src/registry/switch/spinner.tsx",
+          "type": "registry:component",
+          "target": "components/switch/spinner.tsx"
         }
-      ]
+      ],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "switch-css",
