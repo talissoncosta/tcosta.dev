@@ -38,7 +38,7 @@ export default function DropdownMenuDemo() {
         </DropdownMenu>
 
         <DropdownMenu placement="bottom-end">
-          <DropdownMenuTrigger aria-label="More options" className="w-9 justify-center px-0">
+          <DropdownMenuTrigger aria-label="More options" className="size-9 px-0">
             <DotsIcon />
           </DropdownMenuTrigger>
           <DropdownMenuContent>

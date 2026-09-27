@@ -3,10 +3,11 @@
 import { AnimatePresence, motion, type Variants } from 'motion/react';
 import type { ComponentProps } from 'react';
 import { cn } from '@/lib/utils';
+import { IconButton } from '../icon-button';
 import { CheckIcon, CopyIcon } from './icons';
 import { useCopyToClipboard } from './use-copy-to-clipboard';
 
-type CopyButtonProps = Omit<ComponentProps<'button'>, 'onClick' | 'children'> & {
+type CopyButtonProps = Omit<ComponentProps<typeof IconButton>, 'label' | 'onClick' | 'children'> & {
   value: string;
   resetAfter?: number;
   onCopy?: (value: string) => void;
@@ -27,35 +28,32 @@ export function CopyButton({
   const { copied, copy } = useCopyToClipboard({ resetAfter, onCopy });
 
   return (
-    <button
-      type="button"
+    <IconButton
+      label={copied ? 'Copied' : 'Copy to clipboard'}
+      variant="ghost"
+      size="sm"
       onClick={() => copy(value)}
-      aria-label={copied ? 'Copied' : 'Copy to clipboard'}
-      className={cn(
-        'relative inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none',
-        'hover:bg-accent hover:text-accent-foreground',
-        'focus-visible:ring-[3px] focus-visible:ring-ring/50',
-        'active:scale-[0.97]',
-        className,
-      )}
+      className={cn('text-muted-foreground', className)}
       {...props}
     >
-      <AnimatePresence mode="popLayout" initial={false}>
-        <motion.span
-          key={copied ? 'check' : 'copy'}
-          variants={iconVariants}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          transition={{ type: 'spring', duration: 0.3, bounce: 0.25 }}
-          className="flex"
-        >
-          {copied ? <CheckIcon /> : <CopyIcon />}
-        </motion.span>
-      </AnimatePresence>
-      <span className="sr-only" aria-live="polite">
-        {copied ? 'Copied to clipboard' : ''}
-      </span>
-    </button>
+      <>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.span
+            key={copied ? 'check' : 'copy'}
+            variants={iconVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            transition={{ type: 'spring', duration: 0.3, bounce: 0.25 }}
+            className="flex"
+          >
+            {copied ? <CheckIcon /> : <CopyIcon />}
+          </motion.span>
+        </AnimatePresence>
+        <span className="sr-only" aria-live="polite">
+          {copied ? 'Copied to clipboard' : ''}
+        </span>
+      </>
+    </IconButton>
   );
 }

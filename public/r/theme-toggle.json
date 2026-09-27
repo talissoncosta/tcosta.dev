@@ -4,10 +4,12 @@
   "title": "Theme Toggle",
   "description": "Light/dark switch where the new theme grows in a circle from the click (View Transitions API), with a sun/moon morph. Needs next-themes with attribute=\"class\".",
   "dependencies": [
+    "class-variance-authority",
     "next-themes"
   ],
   "registryDependencies": [
-    "utils"
+    "utils",
+    "https://tcosta.dev/r/icon-button.json"
   ],
   "files": [
     {
@@ -18,7 +20,7 @@
     },
     {
       "path": "src/registry/theme-toggle/theme-toggle.tsx",
-      "content": "'use client';\n\nimport type { ComponentProps, MouseEvent } from 'react';\nimport { cn } from '@/lib/utils';\nimport { MoonIcon, SunIcon } from './icons';\nimport { useThemeTransition } from './use-theme-transition';\n\ntype ThemeToggleProps = Omit<ComponentProps<'button'>, 'children'>;\n\nexport function ThemeToggle({ className, onClick, ...props }: ThemeToggleProps) {\n  const toggleTheme = useThemeTransition();\n\n  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {\n    onClick?.(event);\n    if (event.defaultPrevented) return;\n    // Keyboard clicks have no pointer position: grow from the button's center instead.\n    const rect = event.currentTarget.getBoundingClientRect();\n    const fromPointer = event.clientX !== 0 || event.clientY !== 0;\n    toggleTheme({\n      x: fromPointer ? event.clientX : rect.left + rect.width / 2,\n      y: fromPointer ? event.clientY : rect.top + rect.height / 2,\n    });\n  };\n\n  return (\n    <button\n      type=\"button\"\n      aria-label=\"Toggle theme\"\n      onClick={handleClick}\n      className={cn(\n        'relative inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors outline-none',\n        'hover:bg-accent hover:text-accent-foreground',\n        'focus-visible:ring-[3px] focus-visible:ring-ring/50',\n        className,\n      )}\n      {...props}\n    >\n      <SunIcon />\n      <MoonIcon />\n    </button>\n  );\n}\n",
+      "content": "'use client';\n\nimport type { ComponentProps, MouseEvent } from 'react';\nimport { cn } from '@/lib/utils';\nimport { IconButton } from '../icon-button';\nimport { MoonIcon, SunIcon } from './icons';\nimport { useThemeTransition } from './use-theme-transition';\n\ntype ThemeToggleProps = Omit<ComponentProps<typeof IconButton>, 'label' | 'children'>;\n\nexport function ThemeToggle({ className, onClick, ...props }: ThemeToggleProps) {\n  const toggleTheme = useThemeTransition();\n\n  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {\n    onClick?.(event);\n    if (event.defaultPrevented) return;\n    // Keyboard clicks have no pointer position: grow from the button's center instead.\n    const rect = event.currentTarget.getBoundingClientRect();\n    const fromPointer = event.clientX !== 0 || event.clientY !== 0;\n    toggleTheme({\n      x: fromPointer ? event.clientX : rect.left + rect.width / 2,\n      y: fromPointer ? event.clientY : rect.top + rect.height / 2,\n    });\n  };\n\n  return (\n    <IconButton\n      label=\"Toggle theme\"\n      variant=\"ghost\"\n      size=\"sm\"\n      onClick={handleClick}\n      className={cn('rounded-full text-muted-foreground', className)}\n      {...props}\n    >\n      <>\n        <SunIcon />\n        <MoonIcon />\n      </>\n    </IconButton>\n  );\n}\n",
       "type": "registry:component",
       "target": "components/theme-toggle/theme-toggle.tsx"
     },

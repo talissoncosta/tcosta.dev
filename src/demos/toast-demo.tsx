@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { Button } from '@/registry/button';
 import { Toaster, toast } from '@/registry/toast';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -41,9 +41,9 @@ export default function ToastDemo() {
     <div className="flex max-w-md flex-col items-center gap-4">
       <div className="flex flex-wrap justify-center gap-2">
         {examples.map(({ label, run }) => (
-          <DemoButton key={label} onClick={run}>
+          <Button key={label} variant="outline" onClick={run}>
             {label}
-          </DemoButton>
+          </Button>
         ))}
       </div>
       <p className="text-center text-xs text-muted-foreground">
@@ -51,17 +51,5 @@ export default function ToastDemo() {
       </p>
       <Toaster />
     </div>
-  );
-}
-
-function DemoButton({ onClick, children }: { onClick: () => void; children: ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="rounded-md border bg-background px-3 py-1.5 text-sm font-medium shadow-xs transition-[transform,background-color] hover:bg-accent active:scale-[0.97]"
-    >
-      {children}
-    </button>
   );
 }

@@ -4,6 +4,7 @@ import ButtonDemo from '@/demos/button-demo';
 import CopyButtonDemo from '@/demos/copy-button-demo';
 import DropdownMenuDemo from '@/demos/dropdown-menu-demo';
 import IconButtonDemo from '@/demos/icon-button-demo';
+import SwitchCardDemo from '@/demos/switch-card-demo';
 import SwitchCssDemo from '@/demos/switch-css-demo';
 import SwitchDemo from '@/demos/switch-demo';
 import ThemeToggleDemo from '@/demos/theme-toggle-demo';
@@ -18,6 +19,8 @@ export type CatalogEntry = {
   /** YYYY-MM-DD, newest first on the gallery. */
   addedAt: string;
   Demo: ComponentType;
+  /** Smaller demo for gallery cards, when the full one is too big for them. */
+  CardDemo?: ComponentType;
   /** Source files shown on the page, relative to src/registry. Keep in sync with registry.json. */
   files: string[];
 };
@@ -143,6 +146,7 @@ export const catalog: CatalogEntry[] = [
     ],
     addedAt: '2026-09-27',
     Demo: SwitchDemo,
+    CardDemo: SwitchCardDemo,
     files: [
       'switch/switch.tsx',
       'switch/use-switch-state.ts',

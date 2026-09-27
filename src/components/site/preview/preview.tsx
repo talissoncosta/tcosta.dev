@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import type { ReactNode } from 'react';
 import { useReplay } from '@/hooks/use-replay';
 import { cn } from '@/lib/utils';
+import { Button } from '@/registry/button';
 
 const frameClassName = cn(
   'group relative overflow-hidden rounded-xl border bg-muted/60',
@@ -23,9 +24,8 @@ const stageVariants = cva('flex items-center justify-center p-8', {
 });
 
 const replayClassName = cn(
-  'absolute top-3 right-3 rounded-md px-2 py-1 text-xs text-muted-foreground opacity-0 transition',
+  'absolute top-3 right-3 h-7 px-2 text-muted-foreground opacity-0 transition-[opacity,color,background-color,scale]',
   'group-hover:opacity-100 focus-visible:opacity-100',
-  'hover:bg-accent hover:text-accent-foreground',
 );
 
 type PreviewProps = VariantProps<typeof stageVariants> & {
@@ -40,9 +40,9 @@ export function Preview({ children, size }: PreviewProps) {
       <div key={key} className={stageVariants({ size })}>
         {children}
       </div>
-      <button type="button" onClick={replay} className={replayClassName}>
+      <Button variant="ghost" size="sm" onClick={replay} className={replayClassName}>
         Replay
-      </button>
+      </Button>
     </div>
   );
 }

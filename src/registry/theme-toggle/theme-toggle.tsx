@@ -2,10 +2,11 @@
 
 import type { ComponentProps, MouseEvent } from 'react';
 import { cn } from '@/lib/utils';
+import { IconButton } from '../icon-button';
 import { MoonIcon, SunIcon } from './icons';
 import { useThemeTransition } from './use-theme-transition';
 
-type ThemeToggleProps = Omit<ComponentProps<'button'>, 'children'>;
+type ThemeToggleProps = Omit<ComponentProps<typeof IconButton>, 'label' | 'children'>;
 
 export function ThemeToggle({ className, onClick, ...props }: ThemeToggleProps) {
   const toggleTheme = useThemeTransition();
@@ -23,20 +24,18 @@ export function ThemeToggle({ className, onClick, ...props }: ThemeToggleProps) 
   };
 
   return (
-    <button
-      type="button"
-      aria-label="Toggle theme"
+    <IconButton
+      label="Toggle theme"
+      variant="ghost"
+      size="sm"
       onClick={handleClick}
-      className={cn(
-        'relative inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors outline-none',
-        'hover:bg-accent hover:text-accent-foreground',
-        'focus-visible:ring-[3px] focus-visible:ring-ring/50',
-        className,
-      )}
+      className={cn('rounded-full text-muted-foreground', className)}
       {...props}
     >
-      <SunIcon />
-      <MoonIcon />
-    </button>
+      <>
+        <SunIcon />
+        <MoonIcon />
+      </>
+    </IconButton>
   );
 }
