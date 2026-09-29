@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Container } from '@/components/site/container';
 import { DemoCard } from '@/components/site/demo-card';
+import { ProWaitlist } from '@/components/site/pro-waitlist';
 import { Section } from '@/components/site/section';
 import { TextLink } from '@/components/site/text-link';
 import { WorkList } from '@/components/site/work-list';
@@ -53,6 +54,8 @@ export default function Home() {
             ))}
           </ul>
         </Section>
+
+        <ProWaitlist />
 
         <Section order={2} title="Work" className="max-w-2xl">
           <WorkList jobs={work} />
