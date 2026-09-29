@@ -16,6 +16,7 @@ const featured = catalog.filter(({ slug }) =>
 );
 
 const contact = [
+  { label: 'Work with me', href: '/work-with-me' },
   { label: 'Email', href: 'mailto:tcostase@gmail.com' },
   { label: 'GitHub', href: 'https://github.com/talissoncosta' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/talissoncosta/' },
@@ -32,7 +33,8 @@ export default function Home() {
           <p className="max-w-xl text-pretty text-muted-foreground">
             I work at Flagsmith. For over ten years I have been building design systems and React
             interfaces, with a soft spot for accessibility and the small details of motion. The{' '}
-            <TextLink href="/lab">lab</TextLink> is where I polish those details in public.
+            <TextLink href="/lab">lab</TextLink> is where I polish those details in public, and I
+            also <TextLink href="/work-with-me">work with teams</TextLink>.
           </p>
         </Section>
 

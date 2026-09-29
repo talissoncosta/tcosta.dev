@@ -5,7 +5,9 @@ import { site } from '@/lib/site';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ['', '/lab', '/writing'].map((path) => ({ url: `${site.url}${path}` }));
+  const pages = ['', '/lab', '/writing', '/work-with-me'].map((path) => ({
+    url: `${site.url}${path}`,
+  }));
   const components = catalog.map(({ slug, addedAt }) => ({
     url: `${site.url}/lab/${slug}`,
     lastModified: addedAt,
