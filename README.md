@@ -17,17 +17,18 @@ The CLI copies the files into `components/<slug>/`, installs the npm dependencie
 `cn()`. Components use the [shadcn/ui](https://ui.shadcn.com) theme tokens, so they follow your
 theme. You can also copy the source straight from the component's page.
 
-| Component       | What it does                                                                       |
-| --------------- | ---------------------------------------------------------------------------------- |
-| `button`        | Five variants, three sizes, press feedback, loading that keeps its width           |
-| `icon-button`   | Single-icon button whose accessible label is required by the type                  |
-| `dropdown-menu` | Menu that grows out of its trigger, item cascade, typeahead, full keyboard support |
-| `theme-toggle`  | Light/dark switch revealed in a circle from the click (View Transitions)           |
-| `toast`         | Stacked toasts: fan out on hover, swipe to dismiss, pausing timers, promise toasts |
-| `switch`        | Draggable, springy switch with async (optimistic/pessimistic) changes and forms    |
-| `switch-css`    | The same switch with CSS transitions only                                          |
-| `animated-tabs` | Compound tabs whose active pill slides between items                               |
-| `copy-button`   | Copy icon that morphs into a check                                                 |
+| Component       | What it does                                                                                                               |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `button`        | Five variants, three sizes, press feedback, loading that keeps its width                                                   |
+| `icon-button`   | Single-icon button whose accessible label is required by the type                                                          |
+| `dropdown-menu` | Menu that grows out of its trigger, item cascade, typeahead, full keyboard support                                         |
+| `color-picker`  | Popover picker with springy thumbs, swatches, eyedropper and hex input; native ranges for screen readers and voice control |
+| `theme-toggle`  | Light/dark switch revealed in a circle from the click (View Transitions)                                                   |
+| `toast`         | Stacked toasts: fan out on hover, swipe to dismiss, pausing timers, promise toasts                                         |
+| `switch`        | Draggable, springy switch with async (optimistic/pessimistic) changes and forms                                            |
+| `switch-css`    | The same switch with CSS transitions only                                                                                  |
+| `animated-tabs` | Compound tabs whose active pill slides between items                                                                       |
+| `copy-button`   | Copy icon that morphs into a check                                                                                         |
 
 ## Develop
 

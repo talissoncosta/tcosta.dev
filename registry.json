@@ -267,7 +267,7 @@
       "name": "switch-css",
       "type": "registry:component",
       "title": "Switch (CSS-only)",
-      "description": "The same switch with zero JS animation \u2014 CSS transitions only.",
+      "description": "The same switch with zero JS animation — CSS transitions only.",
       "files": [
         {
           "path": "src/registry/switch-css/index.ts",
@@ -351,6 +351,115 @@
         }
       ],
       "registryDependencies": ["utils"]
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:component",
+      "title": "Color Picker",
+      "description": "Popover color picker (Floating UI) with a springy saturation/brightness area and hue slider, swatches with roving focus, an eyedropper and a hex field. Native range inputs underneath, so it works with keyboards, screen readers and voice control.",
+      "dependencies": ["motion", "@floating-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "utils",
+        "https://tcosta.dev/r/button.json",
+        "https://tcosta.dev/r/icon-button.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/color-picker/index.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/index.ts"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-trigger.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-trigger.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-content.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-content.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-area.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-area.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-hue.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-hue.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-swatches.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-swatches.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-input.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-input.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-eye-dropper.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-eye-dropper.tsx"
+        },
+        {
+          "path": "src/registry/color-picker/use-color-picker.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/use-color-picker.ts"
+        },
+        {
+          "path": "src/registry/color-picker/use-pointer-position.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/use-pointer-position.ts"
+        },
+        {
+          "path": "src/registry/color-picker/use-thumb-position.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/use-thumb-position.ts"
+        },
+        {
+          "path": "src/registry/color-picker/use-eye-dropper.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/use-eye-dropper.ts"
+        },
+        {
+          "path": "src/registry/color-picker/slider-keys.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/slider-keys.ts"
+        },
+        {
+          "path": "src/registry/color-picker/color.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/color.ts"
+        },
+        {
+          "path": "src/registry/color-picker/variants.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/variants.ts"
+        },
+        {
+          "path": "src/registry/color-picker/transform-origin.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/transform-origin.ts"
+        },
+        {
+          "path": "src/registry/color-picker/color-picker-context.ts",
+          "type": "registry:component",
+          "target": "components/color-picker/color-picker-context.ts"
+        },
+        {
+          "path": "src/registry/color-picker/icons.tsx",
+          "type": "registry:component",
+          "target": "components/color-picker/icons.tsx"
+        }
+      ]
     }
   ]
 }
