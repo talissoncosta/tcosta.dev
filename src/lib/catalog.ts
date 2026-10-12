@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import AnimatedTabsDemo from '@/demos/animated-tabs-demo';
 import ButtonDemo from '@/demos/button-demo';
+import ColorPickerDemo from '@/demos/color-picker-demo';
 import CopyButtonDemo from '@/demos/copy-button-demo';
 import DropdownMenuDemo from '@/demos/dropdown-menu-demo';
 import IconButtonDemo from '@/demos/icon-button-demo';
@@ -32,6 +33,44 @@ export type CatalogEntry = {
  * 3. an entry here + an item in registry.json
  */
 export const catalog: CatalogEntry[] = [
+  {
+    slug: 'color-picker',
+    title: 'Color Picker',
+    description:
+      'Popover color picker whose thumbs spring to each click and swell under the finger. Swatches with a sliding ring, an eyedropper, and a hex field that shakes off typos.',
+    techniques: [
+      'Floating UI',
+      'Composite (roving focus)',
+      'useMotionValue',
+      'pointer capture',
+      'layoutId',
+      'a11y: 2D slider from native ranges',
+      'aria-valuetext color names',
+    ],
+    addedAt: '2026-10-08',
+    Demo: ColorPickerDemo,
+    files: [
+      'color-picker/color-picker.tsx',
+      'color-picker/color-picker-trigger.tsx',
+      'color-picker/color-picker-content.tsx',
+      'color-picker/color-picker-area.tsx',
+      'color-picker/color-picker-hue.tsx',
+      'color-picker/color-picker-swatches.tsx',
+      'color-picker/color-picker-input.tsx',
+      'color-picker/color-picker-eye-dropper.tsx',
+      'color-picker/use-color-picker.ts',
+      'color-picker/use-pointer-position.ts',
+      'color-picker/use-thumb-position.ts',
+      'color-picker/use-eye-dropper.ts',
+      'color-picker/slider-keys.ts',
+      'color-picker/color.ts',
+      'color-picker/variants.ts',
+      'color-picker/transform-origin.ts',
+      'color-picker/color-picker-context.ts',
+      'color-picker/icons.tsx',
+      'color-picker/index.ts',
+    ],
+  },
   {
     slug: 'button',
     title: 'Button',
